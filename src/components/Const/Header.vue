@@ -75,7 +75,8 @@ span{
     margin:0px;
     padding:0px;
     float: right;
-    margin-right: 180px
+    margin-right: 180px;
+    height: 40px
 }
 .box li {
     padding:7px;
