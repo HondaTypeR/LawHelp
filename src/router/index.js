@@ -5,6 +5,7 @@ import Regin from '@/components/Pages/Regin'
 import Login from '@/components/Pages/Login'
 import Talk from '@/components/Base/Talk'
 import Ask from '@/components/Pages/Ask'
+import Test from '@/components/Pages/Test'
 import TalkAbout from '@/components/Pages/TalkAbout'
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ export default new Router({
       path:'/TalkAbout',
       name: 'TalkAbout',
       component: TalkAbout
+    },
+    {
+      path:'/Test',
+      name: 'Test',
+      component: Test
     }
   ]
 })
