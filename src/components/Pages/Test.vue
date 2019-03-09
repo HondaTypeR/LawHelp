@@ -3,6 +3,7 @@
       <span>测试</span>
       <button @click="submit">submit</button>
       <button @click="submited">submited</button>
+      <button @click="local">local</button>
   </div>
 </template>
 
@@ -46,7 +47,17 @@ export default {
              .catch(function (error) {
              console.log(error);
             });
-    }
+    },
+        local(){
+            const axios = require('axios');
+            axios.get('/api/add/user/che/1234/12306/1')
+            .then(function(response){
+                console.log(response)
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        }
     }
 }
 </script>
