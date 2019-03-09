@@ -4,6 +4,8 @@
       <button @click="submit">submit</button>
       <button @click="submited">submited</button>
       <button @click="local">local</button>
+      <input type="text">
+      
   </div>
 </template>
 
@@ -11,13 +13,11 @@
 export default {
     data(){
         return{
-        username:'fang',
-        userId:1,
-        id:1,
-        user:{
-            userId:2,
-            id:5
-        }
+            username:'gf',
+            password:'54',
+            phone:55,
+            role:1,
+            userId:2
         }
     }, 
     methods:{
@@ -49,8 +49,9 @@ export default {
             });
     },
         local(){
+            console.log(this.username)
             const axios = require('axios');
-            axios.get('/api/add/user/che/1234/12306/1')
+            axios.get('/api/add/user/'+this.username+'/'+this.password+'/'+this.phone+'/'+this.role)
             .then(function(response){
                 console.log(response)
             })
