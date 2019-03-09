@@ -5,7 +5,7 @@
       <button @click="submited">submited</button>
       <button @click="local">local</button>
       <input type="text">
-      
+      <el-button type="text" v-show="this.flag">点击打开 Message Box</el-button>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ export default {
             password:'54',
             phone:55,
             role:1,
-            userId:2
+            userId:2,
+            flag:false,
         }
     }, 
     methods:{
@@ -37,12 +38,15 @@ export default {
     
         },
         submited(){
+            this.flag=true
             const axios = require('axios');
             axios.post('http://jsonplaceholder.typicode.com/posts',{
                user:this.user
             })
             .then(function (response) {
+            
             console.log(response);
+            
              })
              .catch(function (error) {
              console.log(error);
@@ -58,7 +62,18 @@ export default {
             .catch(function(error){
                 console.log(error);
             })
-        }
+        },
+         sss() {
+        this.$alert('这是一段内容', '标题名称', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+      }
     }
 }
 </script>

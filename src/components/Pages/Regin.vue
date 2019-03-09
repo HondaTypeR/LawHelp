@@ -14,23 +14,18 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon">上传头像</i>
         </el-upload>
+        <el-button type="text" v-show="false" @click="submited()"></el-button>
+        <el-form-item label="手机号" prop="phone">
+            <el-input class="user" v-model.number="userinfo.phone" placeholder="注册的手机号将作为您的登陆手机号" maxlength="11"></el-input>
+        </el-form-item>
           <el-form-item label="用户名" prop="username">
-            <el-input class="user" type="username" v-model="userinfo.username"></el-input>
+            <el-input class="user" type="username" v-model="userinfo.username" maxlength="10" placeholder="最大支持10个字符"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-            <el-input class="user" type="password" v-model="userinfo.pass" autocomplete="off"></el-input>
+            <el-input class="user" type="password" v-model="userinfo.pass" autocomplete="off" show-password maxlength="20" minlength="6" placeholder="最大支持20个字符"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-            <el-input class="user"  type="password" v-model="userinfo.checkPass" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-            <el-input class="user" v-model.number="userinfo.phone"></el-input>
-        </el-form-item>
-         <el-form-item label="选择身份" prop="role">
-            <el-radio-group v-model="userinfo.role">
-            <el-radio label="1" v-model="userinfo.role">普通用户</el-radio>
-            <el-radio label="2" v-model="userinfo.role">付费专家</el-radio>
-            </el-radio-group>
+            <el-input class="user"  type="password" v-model="userinfo.checkPass" autocomplete="off" show-password  maxlength="20"  minlength="6" placeholder="最大支持20个字符"></el-input>   
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="submitForm('userinfo')">提交</el-button>
@@ -72,7 +67,11 @@ import Footer from '@/components/Const/Footer.vue'
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
-        } else {
+        } 
+        if(value.length<6){
+          callback(new Error('密码长度不能少于6位'))
+        }
+        else {
           if (this.userinfo.checkPass !== '') {
             this.$refs.userinfo.validateField('checkPass');
           }
@@ -82,7 +81,11 @@ import Footer from '@/components/Const/Footer.vue'
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.userinfo.pass) {
+        } 
+        if(value.length<6){
+          callback(new Error('密码长度不能少于6位'))
+        }
+        else if (value !== this.userinfo.pass) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -95,7 +98,6 @@ import Footer from '@/components/Const/Footer.vue'
           pass: '',
           checkPass: '',
           phone: '',
-          role: '',
         },
         rules2: {
           username:[
@@ -110,21 +112,19 @@ import Footer from '@/components/Const/Footer.vue'
           phone: [
             {required: true, validator: checkPhone, trigger: 'blur' }
           ],
-          role: [
-            { required: true, message: '请选择身份', trigger: 'change' }
-          ],
         }
       };
     },
     methods: {
       submitForm(formName) {
       const axios =require('axios');
-      axios.get('/api/add/user/'+this.userinfo.username+'/'+this.userinfo.pass+'/'+this.userinfo.phone+'/'+this.userinfo.role)
+      axios.get('/api/add/user/'+this.userinfo.phone+'/'+this.userinfo.username+'/'+this.userinfo.pass)
       .then(function(response){
         console.log(response.data.success)
         var flag = response.data.success;
         if(flag==true){
           alert("注册成功")
+
         }else{
           alert("注册失败")
         }

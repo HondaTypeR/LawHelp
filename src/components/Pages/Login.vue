@@ -4,15 +4,15 @@
       <div class="form">
           <div class="box-left">
               <span class="title">账号登陆</span>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="用户名" required="true">
-            <el-input class="user"></el-input>
+        <el-form :model="userinfo" status-icon :rules="rules2" ref="userinfo" label-width="100px" class="demo-ruleForm">
+         <el-form-item label="手机号" prop="phone">
+            <el-input class="user" v-model.number="userinfo.phone" maxlength="11"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-            <el-input class="user" type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+            <el-input class="user" type="password" v-model="userinfo.pass" autocomplete="off" show-password></el-input>
         </el-form-item>
         <el-form-item>
-            <el-button type="success" @click="submitForm('ruleForm2')" class="login">登陆</el-button>
+            <el-button type="success" @click="submitForm('userinfo')" class="login">登陆</el-button>
         </el-form-item>
         </el-form>
         </div>
@@ -29,22 +29,44 @@ import Footer from '@/components/Const/Footer.vue'
   export default {
     name:'Login',
     data() {
+       //正则验证手机号
+      var TEL = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+      var checkPhone = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('手机号不能为空'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'));
+          }   
+          if(!TEL.test(value)){
+            callback(new Error('手机号格式有误，请重新输入'))
+          }
+          else{
+            callback();
+          }
+        },1000);
+      };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
+          if (this.userinfo.checkPass !== '') {
+            this.$refs.userinfo.validateField('checkPass');
           }
           callback();
         }
       };
       return {
         imageUrl: '',
-        ruleForm2: {
+        userinfo: {
+          phone:'',
           pass: '',
         },
         rules2: {
+          phone:[
+            {required:true, validator: checkPhone, trigger: 'blur'}
+          ],
           pass: [
             { required: true,validator: validatePass, trigger: 'blur' }
           ],
@@ -53,14 +75,22 @@ import Footer from '@/components/Const/Footer.vue'
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+       const axios =require('axios');
+      axios.get('/api/find/user/'+this.userinfo.phone+'/'+this.userinfo.pass)
+      .then(function(response){
+        console.log(response.data.success)
+        var flag = response.data.success;
+        if(flag==true){
+          alert("登陆成功")
+
+        }else{
+          alert("登陆失败")
+        }
+
+      })
+      .then(function(error){
+        console.log(error)
+      })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
