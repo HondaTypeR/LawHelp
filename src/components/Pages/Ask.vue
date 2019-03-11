@@ -18,17 +18,17 @@
             v-model="ruleForm.details">
           </el-input>
           </el-form-item>
-          <el-form-item label="区域 ：">
-            <el-select placeholder="请选择省份" v-model="ruleForm.province">
+          <el-form-item label="省份(可选)：" prop="province">
+            <el-select placeholder="建议填写,方便为您解答" v-model="ruleForm.province" >
                <el-option v-for="(item,index) in provinces" :value="item.province">{{item.province}}</el-option>
              </el-select>
           </el-form-item>
-          <el-form-item label="区域 ：">
-            <el-select placeholder="请选择城市" v-model="ruleForm.city">
+          <el-form-item label="城市(可选) ：">
+            <el-select placeholder="建议填写,方便为您解答" v-model="ruleForm.city" no-data-text="请先选择省份">
                <el-option v-for="(item,index) in citys" :value="item.city">{{item.city}}</el-option>
              </el-select>
           </el-form-item>
-          <el-form-item label="问题分类">
+          <el-form-item label="问题分类: " prop="type">
               <el-select placeholder="请选择类型" v-model="ruleForm.type">
                        <el-option label="民事" value="民事"></el-option>
                        <el-option label="刑事" value="刑事"></el-option>
@@ -36,11 +36,11 @@
              </el-select>
          </el-form-item>
           <el-form-item label="手机号码 ：" prop="phone">
-             <el-input v-model.number="ruleForm.phone" placeholder="请输入内容"></el-input>
+             <el-input v-model.number="ruleForm.phone" placeholder="请输入内容" maxlength="11"></el-input>
           </el-form-item>
           <el-form-item>
              <el-button type="success" @click="submitForm('ruleForm')">发起提问</el-button>
-             <el-button @click="resetForm('ruleForm')">重置</el-button>
+               <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
 </el-form>
       </div>
@@ -92,6 +92,15 @@
           ],
           phone:[
             {required:true,validator: checkPhone, trigger: 'blur'},
+          ],
+          type:[
+            {required:true, trigger: 'blur'}
+          ],
+          city:[
+            {required:false,trigger:'blur'}
+          ],
+          province:[
+            {required:false,trigger:'blur'}
           ]
         },
       };
@@ -119,12 +128,12 @@
           }
         });
       },
-      resetForm(formName) {
+       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      
-      getCitys(temp){
-         this.$axios.get('/api/find/city/'+this.temp)
+      getCitys(){
+      this.ruleForm.city='';
+      this.$axios.get('/api/find/city/'+this.ruleForm.province)
       .then((res)=>{
         var responcity= res.data.result;
         this.citys=responcity
@@ -158,7 +167,7 @@
     province(newval,oldval){
       console.log(newval)
       var temp=newval
-      this.getCitys(newval);
+      this.getCitys();
     }
   }
   }
