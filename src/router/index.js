@@ -7,6 +7,7 @@ import Talk from '@/components/Base/Talk'
 import Ask from '@/components/Pages/Ask'
 import Test from '@/components/Pages/Test'
 import TalkAbout from '@/components/Pages/TalkAbout'
+import Professor from '@/components/Pages/Professor'
 Vue.use(Router)
 
 export default new Router({
@@ -45,6 +46,11 @@ export default new Router({
       path:'/Test',
       name: 'Test',
       component: Test
+    },
+    {
+      path:'/Professor',
+      name: 'Professor',
+      component: Professor
     }
   ]
 })

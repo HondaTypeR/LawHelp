@@ -4,28 +4,19 @@
       <div class="form">
           <div class="box-left">
         <el-form :model="userinfo" status-icon :rules="rules2" ref="userinfo" label-width="100px" class="demo-ruleForm">
-            <span class="title">账号注册</span>
-        <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">上传头像</i>
-        </el-upload>
+            <span class="title">认证专家</span>
         <el-button type="text" v-show="false" @click="submited()"></el-button>
         <el-form-item label="手机号" prop="phone">
             <el-input class="user" v-model.number="userinfo.phone" placeholder="注册的手机号将作为您的登陆手机号" maxlength="11"></el-input>
         </el-form-item>
-          <el-form-item label="用户名" prop="username">
-            <el-input class="user" type="username" v-model="userinfo.username" maxlength="10" placeholder="最大支持10个字符"></el-input>
+          <el-form-item label="真实姓名" prop="name">
+            <el-input class="user" type="name" v-model="userinfo.name" maxlength="10"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
-            <el-input class="user" type="password" v-model="userinfo.pass" autocomplete="off" show-password maxlength="20" minlength="6" placeholder="最大支持20个字符"></el-input>
+        <el-form-item label="身份证号" prop="idcard">
+            <el-input class="user" type="idcard" v-model="userinfo.idcard" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-            <el-input class="user"  type="password" v-model="userinfo.checkPass" autocomplete="off" show-password  maxlength="20"  minlength="6" placeholder="最大支持20个字符"></el-input>   
+       <el-form-item label="证件号" prop="assestid">
+            <el-input class="user" type="assestid" v-model="userinfo.assestid" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="submitForm('userinfo')">提交</el-button>
@@ -43,6 +34,7 @@
 <script>
 import Header from '@/components/Const/Header.vue'
 import Footer from '@/components/Const/Footer.vue'
+import Home from '@/components/Home.vue'
   export default {
     name:'Regin',
     data() {
@@ -64,69 +56,40 @@ import Footer from '@/components/Const/Footer.vue'
           }
         },1000);
       };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } 
-        if(value.length<6){
-          callback(new Error('密码长度不能少于6位'))
-        }
-        else {
-          if (this.userinfo.checkPass !== '') {
-            this.$refs.userinfo.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } 
-        if(value.length<6){
-          callback(new Error('密码长度不能少于6位'))
-        }
-        else if (value !== this.userinfo.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
        return {
-        imageUrl: '',
         userinfo: {
-          username:'',
-          pass: '',
-          checkPass: '',
+          name:'',
+          idcard: '',
           phone: '',
+          assestid:'',
         },
         rules2: {
-          username:[
+          name:[
             {required:true,}
           ],
-          pass: [
-            { required: true,validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { required: true,validator: validatePass2, trigger: 'blur' }
+          idcard: [
+            { required: true,trigger: 'blur' }
           ],
           phone: [
             {required: true, validator: checkPhone, trigger: 'blur' }
           ],
+          assestid:[
+            {required:true}
+          ]
         }
       };
     },
+    components:{
+      'home':Home
+    },
     methods: {
-      submitForm(formName) { 
+      submitForm(formName) {
+       
       const axios =require('axios');
-      axios.get('/api/add/user/'+this.userinfo.phone+'/'+this.userinfo.username+'/'+this.userinfo.pass)
+      axios.get('/api/add/professor/'+this.userinfo.phone+'/'+this.userinfo.name+'/'+this.userinfo.idcard+'/'+this.userinfo.assestid)
       .then(function(response){
         console.log(response.data.success)
-        var flag = response.data.success;
-        if(flag=true){
-         alert("成功")
-        }else{
-          alert("失败")
-        }
+        console.log(response)
       })
       .then(function(error){
         console.log(error)
@@ -135,21 +98,6 @@ import Footer from '@/components/Const/Footer.vue'
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      }
     },
     components:{
         'ab-header':Header,

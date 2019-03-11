@@ -10,8 +10,8 @@
              <li>法律援助</li>
              <li>今日说法</li>
              <li>经典案例</li>
-             <li>认证专家</li>
-            <router-link to="TalkAbout"> <li>沟通交流</li></router-link>
+            <router-link to="/Professor"> <li>认证专家</li></router-link>
+            <router-link to="/TalkAbout"> <li>沟通交流</li></router-link>
              <li>服务热线</li>
          </ul>
      </div>
