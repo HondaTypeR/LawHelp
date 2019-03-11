@@ -121,6 +121,7 @@
           }
         }).then((res)=>{
           console.log(res.data)
+          this.$router.push({path:'/Success'})
         })
           } else {
             console.log('error submit!!');

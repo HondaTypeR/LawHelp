@@ -8,6 +8,7 @@ import Ask from '@/components/Pages/Ask'
 import Test from '@/components/Pages/Test'
 import TalkAbout from '@/components/Pages/TalkAbout'
 import Professor from '@/components/Pages/Professor'
+import Success from '@/components/Pages/Success'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +52,11 @@ export default new Router({
       path:'/Professor',
       name: 'Professor',
       component: Professor
+    },
+    {
+      path:'/Success',
+      name: 'Success',
+      component: Success
     }
   ]
 })
