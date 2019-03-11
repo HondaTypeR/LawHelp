@@ -9,6 +9,7 @@ import Test from '@/components/Pages/Test'
 import TalkAbout from '@/components/Pages/TalkAbout'
 import Professor from '@/components/Pages/Professor'
 import Success from '@/components/Pages/Success'
+import Questions from '@/components/Pages/Questions'
 Vue.use(Router)
 
 export default new Router({
@@ -57,6 +58,11 @@ export default new Router({
       path:'/Success',
       name: 'Success',
       component: Success
+    },
+    {
+      path:'/Questions',
+      name: 'Questions',
+      component: Questions
     }
   ]
 })

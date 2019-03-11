@@ -18,13 +18,13 @@
             v-model="ruleForm.details">
           </el-input>
           </el-form-item>
-          <el-form-item label="省份(可选)：" prop="province">
-            <el-select placeholder="建议填写,方便为您解答" v-model="ruleForm.province" >
+          <el-form-item label="省份：" prop="province">
+            <el-select placeholder="请选择省份信息" v-model="ruleForm.province" >
                <el-option v-for="(item,index) in provinces" :value="item.province">{{item.province}}</el-option>
              </el-select>
           </el-form-item>
-          <el-form-item label="城市(可选) ：">
-            <el-select placeholder="建议填写,方便为您解答" v-model="ruleForm.city" no-data-text="请先选择省份">
+          <el-form-item label="城市 ：">
+            <el-select placeholder="请选择城市信息" v-model="ruleForm.city" no-data-text="请先选择省份">
                <el-option v-for="(item,index) in citys" :value="item.city">{{item.city}}</el-option>
              </el-select>
           </el-form-item>
@@ -97,10 +97,10 @@
             {required:true, trigger: 'blur'}
           ],
           city:[
-            {required:false,trigger:'blur'}
+            {required:true,trigger:'blur'}
           ],
           province:[
-            {required:false,trigger:'blur'}
+            {required:true,trigger:'blur'}
           ]
         },
       };
@@ -117,7 +117,8 @@
             details:this.ruleForm.details,
             phone:this.ruleForm.phone,
             type:this.ruleForm.type,
-            province:this.ruleForm.province
+            province:this.ruleForm.province,
+            city:this.ruleForm.city
           }
         }).then((res)=>{
           console.log(res.data)
@@ -149,8 +150,6 @@
         this.provinces=respon
         console.log(respon)
       })
-      
-     
     },
     computed:{
      province(){
