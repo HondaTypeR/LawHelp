@@ -5,8 +5,11 @@
              <el-row>
                 <el-col :span="16">
                     <div class="left grid-content bg-purple-dark ">
-                        <div class="boxHeader" v-for="item in messages">
-                            <h2>{{item.title}}</h2>
+                        
+
+                        <div v-for="item in messages">
+                            <el-card shadow="hover" class="cardbox">
+                           <router-link to="/BBC"> <h2>{{item.title}}</h2></router-link>
                              <p>{{item.details}}</p>
                             <el-badge :value="200" :max="99" class="item">
                             <el-button size="small">评论</el-button>
@@ -15,11 +18,20 @@
                             <el-button size="small">回复</el-button>
                             </el-badge>
                             <el-badge  class="item">
-                            <el-button size="small">{{item.type}}</el-button>
+                              <el-tag>{{item.type}}</el-tag>
                             </el-badge>
-                             <el-badge class="date">
-                             <p>{{item.createdate}}</p>
+                            <el-badge  class="item">
+                              <el-tag type="success">{{item.province}}</el-tag>
+                            </el-badge>
+                            <el-badge  class="item">
+                              <el-tag type="warning">{{item.city}}</el-tag>
+                            </el-badge>
+                             <el-badge class="item">
+                            
+                             <el-tag type="danger">发布时间:{{item.createdate}}</el-tag>
                              </el-badge>
+                             
+    </el-card>
                         </div>
                     </div>
                 </el-col>
@@ -74,13 +86,6 @@ export default {
     margin-bottom: 20px;
     margin-top: 20px;
 }
-.boxHeader {
-    border-bottom: 1px solid #409EFF;
-    height: 180px;
-    width: 930px;
-    border-top: 1px solid #409EFF;
-    background-color: whitesmoke;
-}
 .item {
   margin-top: 10px;
   margin-right: 40px;
@@ -88,5 +93,8 @@ export default {
 .el-badge.date {
     float: right;
     margin-right: 165px;
+}
+.el-card.cardbox.is-hover-shadow {
+    margin-top: 10px;
 }
 </style>

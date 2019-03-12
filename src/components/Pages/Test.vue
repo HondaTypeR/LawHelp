@@ -11,6 +11,13 @@
       <button @click="local">local</button>
       <input type="text">
       <p type="text" @click="open3">点击打开 Message Box</p>
+
+
+        <el-col :span="8">
+    <el-card shadow="always">
+      总是显示
+    </el-card>
+  </el-col>
   </div>
 </template>
 

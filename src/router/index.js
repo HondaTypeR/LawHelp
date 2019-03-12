@@ -10,6 +10,7 @@ import TalkAbout from '@/components/Pages/TalkAbout'
 import Professor from '@/components/Pages/Professor'
 import Success from '@/components/Pages/Success'
 import Questions from '@/components/Pages/Questions'
+import BBC from '@/components/Pages/BBC'
 Vue.use(Router)
 
 export default new Router({
@@ -63,6 +64,11 @@ export default new Router({
       path:'/Questions',
       name: 'Questions',
       component: Questions
+    },
+    {
+      path:'/BBC',
+      name: 'BBC',
+      component: BBC
     }
   ]
 })

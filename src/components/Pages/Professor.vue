@@ -18,6 +18,15 @@
        <el-form-item label="证件号" prop="assestid">
             <el-input class="user" type="assestid" v-model="userinfo.assestid" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="单位" prop="unit">
+            <el-input class="user" type="unit" v-model="userinfo.unit" autocomplete="off"></el-input>
+        </el-form-item>
+         <el-form-item label="职称" prop="duty">
+            <el-input class="user" type="duty" v-model="userinfo.duty" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="擅长" prop="goodat">
+            <el-input class="user" type="goodat" v-model="userinfo.goodat" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="submitForm('userinfo')">提交</el-button>
             <el-button @click="resetForm('userinfo')">重置</el-button>
@@ -62,6 +71,9 @@ import Home from '@/components/Home.vue'
           idcard: '',
           phone: '',
           assestid:'',
+          unit:'',
+          duty:'',
+          goodat:'',
         },
         rules2: {
           name:[
@@ -75,6 +87,15 @@ import Home from '@/components/Home.vue'
           ],
           assestid:[
             {required:true}
+          ],
+          unit:[
+            {required:true}
+          ],
+          duty:[
+            {required:true}
+          ],
+          goodat:[
+            {required:true}
           ]
         }
       };
@@ -86,7 +107,7 @@ import Home from '@/components/Home.vue'
       submitForm(formName) {
        
       const axios =require('axios');
-      axios.get('/api/add/professor/'+this.userinfo.phone+'/'+this.userinfo.name+'/'+this.userinfo.idcard+'/'+this.userinfo.assestid)
+      axios.get('/api/add/professor/'+this.userinfo.phone+'/'+this.userinfo.name+'/'+this.userinfo.idcard+'/'+this.userinfo.assestid+'/'+this.userinfo.unit+'/'+this.userinfo.duty+'/'+this.userinfo.goodat)
       .then(function(response){
         console.log(response.data.success)
         console.log(response)
