@@ -8,8 +8,8 @@
                         
 
                         <div v-for="item in messages">
-                            <el-card shadow="hover" class="cardbox">
-                           <router-link to="/BBC"> <h2>{{item.title}}</h2></router-link>
+                          <el-card shadow="hover" class="cardbox">
+                            <router-link to="/BBC"> <h2>{{item.title}}</h2></router-link>
                              <p>{{item.details}}</p>
                             <el-badge :value="200" :max="99" class="item">
                             <el-button size="small">评论</el-button>
@@ -27,11 +27,9 @@
                               <el-tag type="warning">{{item.city}}</el-tag>
                             </el-badge>
                              <el-badge class="item">
-                            
                              <el-tag type="danger">发布时间:{{item.createdate}}</el-tag>
-                             </el-badge>
-                             
-    </el-card>
+                             </el-badge>                        
+                          </el-card>
                         </div>
                     </div>
                 </el-col>

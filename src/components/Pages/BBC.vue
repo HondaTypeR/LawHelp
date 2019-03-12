@@ -9,64 +9,87 @@
              <el-row>
                   <el-col :span="18">
                       <div class="left grid-content bg-purple-dark" v-for="item in messages">
-                      <h1 class="titles">{{item.title}}</h1>
-                <el-card shadow="always">
-                       <el-badge  class="item">
-                              <span>问题类型:</span>
-                              <el-tag>{{item.type}}</el-tag>
-                        </el-badge>
-                      <p>问题描述：</p>
-                      <div>
-                            <p>{{item.details}}</p>
-                      </div>
-                        <el-badge  class="item">
+                            <h1 class="titles">{{item.title}}</h1>
+                 <el-card shadow="always">
+                                     <el-badge  class="item">
+                                        <span>问题类型:</span>
+                                        <el-tag>{{item.type}}</el-tag>
+                                     </el-badge>
+                                 <p>问题描述：</p>
+                            <div>
+                                <p>{{item.details}}</p>
+                            </div>
+                            <el-badge  class="item">
                               <span>区域:</span>
                               <el-tag>{{item.province}}</el-tag>
-                        </el-badge>
-                        <el-badge  class="item">
+                           </el-badge>
+                           <el-badge  class="item">
                               <el-tag type="warning">{{item.city}}</el-tag>
-                        </el-badge>
-                        <el-badge  class="item">
-                            <span style="margin-left: 60px">联系方式:</span>
-                            <el-tag>{{item.phone}}</el-tag>
-                        </el-badge>
-                        <el-badge  class="item">
-                             <span style="margin-left: 60px">发布人:</span>
+                           </el-badge>
+                           <el-badge  class="item">
+                              <span style="margin-left: 60px">联系方式:</span>
+                              <el-tag>{{item.phone}}</el-tag>
+                           </el-badge>
+                           <el-badge  class="item">
+                              <span style="margin-left: 60px">发布人:</span>
                               <el-tag>{{item.username}}</el-tag>
-                        </el-badge>
-                        <el-badge  class="item">
-                             <span style="margin-left: 60px">发布时间:</span>
+                           </el-badge>
+                           <el-badge  class="item">
+                              <span style="margin-left: 60px">发布时间:</span>
                               <el-tag>{{item.createdate}}</el-tag>
-                        </el-badge>
-                        <br> <br>
-                       <router-link to="/Ask"> <el-button type="success">我也要提问</el-button></router-link>
+                           </el-badge>
+                           <br> <br>
+                           <router-link to="/Ask"> <el-button type="success">我也要提问</el-button></router-link>
                  </el-card>
-                        <el-card :body-style="{ padding: '0px' }">
-                        <h3 style="padding-left:20px" class="linetext">专家回复区</h3>
-                        <img src="@/assets/role.jpg" class="doc">
-                        <span class="name">车俊林</span>
-                        <span class="unit">吉林省法院</span>
-                        <span class="duty">院长</span>
-                        <span class="good">擅长:</span>
-                        <span class="goods">肩周炎,颈椎病,腰椎间盘突出,失眠,脑血栓,骨关节</span>
-                      <div class="dialog-box">
-                      <span class="bot"></span>
-                      <span class="top"></span>
-                      <div  class="textareas">
-                          <p class="time">2019-03-06 01:12:15</p>
-                          <p class="texts"> 从你描述的情况来分析，踝关节扭伤之后仍然存在脚肿的情况，大多是由于存在一血没有完全吸收，考虑应用活血化瘀的药物，同时配合针灸效果更好。</p>
+                <div v-for="item in professors">
+                     <el-row>
+                          <h3 style="padding-left:20px" class="linetext">专家回复</h3>
+                        <el-col :span="5">
+                            <div class="grid-content bg-purple-dark">
+                                 <el-card shadow="always">
+                                    <img src="@/assets/role.jpg" class="doc">
+                                 </el-card>
+                            </div>
+                         </el-col>
+                        <el-col :span="19">
+                            <div class="rright grid-content bg-purple-dark">
+                              <el-card shadow="hover">
+                                    <span class="name">{{item.professorName}}</span>
+                                    <span class="unit">{{item.professorUnit}}</span>
+                                    <span class="duty">{{item.professorDuty}}</span>
+                                    <p class="good">擅长:</p>
+                                    <span class="goods">{{item.goodat}}</span>
+                              </el-card>
+                            </div>
+                        </el-col>
+                     </el-row>
+                    <el-row>
+                    <el-col :span="24">
+                        <div class="grid-content bg-purple-dark">    
+                        <div class="dialog-box">
+                            <span class="bot"></span>
+                            <span class="top"></span>
+                         <div  class="textareas">
+                          <p class="time">{{item.professorDate}}</p>
+                          <p class="texts">{{item.professorRes}}</p>
                               </div>
                              </div>
-                        </el-card>
+                        </div>
+                    </el-col>
+                    </el-row>
+            </div>        
+                      
 
-                        <el-card :body-style="{ padding: '0px' }">
+
+
+                        <!-- <el-card :body-style="{ padding: '0px' }">
                         <h3 style="padding-left:20px" class="linetext">网友回复区</h3>
                       <div  class="textareass">
                           <p class="times">Jack---2019-03-06 01:12:15</p>
                           <p class="texts"> 从你描述的情况来分析，踝关节扭伤之后仍然存在脚肿的情况，大多是由于存在一血没有完全吸收，考虑应用活血化瘀的药物，同时配合针灸效果更好。</p>
                      
                     </div>
-                        </el-card>
+                        </el-card> -->
                 </div>
                   </el-col>
                   <el-col :span="6"><div class="right grid-content bg-purple-dark"></div></el-col>
@@ -83,7 +106,8 @@
     data() {
       return {
         id:'26',
-        messages:[]
+        messages:[],
+        professors:[]
        }
     },
     methods: {
@@ -96,6 +120,13 @@
         var respon =res.data;
         this.messages=respon
         console.log(this.messages)
+      })
+
+        this.$axios.get("/api/find/professorRes/"+this.id)
+      .then((res)=>{
+        var respons =res.data;
+        this.professors=respons
+        console.log(this.professors)
       })
     },
   }
@@ -148,38 +179,27 @@ h3.linetext {
     border-bottom: 1px solid;
 }
 img.doc {
-    height: 94px;
+    height: 91px;
     border: outset 5px #e9a408;
-    margin-left: 20px;
+    margin-left: 9px;
 }
 span.name {
-    position: absolute;
-    left: 272px;
     font-size: 24px;
     color: blue;
     font-weight: bold;
-    top: 421px;
-
 }
 span.unit {
-    position: absolute;
-    left: 370px;
-    top: 429px;
+   margin-left: 30px
 }
 span.duty {
-    position: absolute;
-    top: 429px;
-    left: 482px;
+   margin-left: 20px
 }
-span.good {
-    position: absolute;
-    top: 488px;
-    left: 272px;
+p.good {
+      font-weight: bold;
 }
-span.goods {
-    position: absolute;
-    top: 488px;
-    left: 318px;
+.el-card__body {
+    padding: 20px;
+    height: 100px;
 }
 .dialog-box {
         position: relative;
