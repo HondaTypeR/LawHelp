@@ -1,48 +1,43 @@
 <template>
-  <div>
-      <ab-header></ab-header>
-      <div class="form">
-          <div class="box-left">
-        <el-form :model="userinfo" status-icon :rules="rules2" ref="userinfo" label-width="100px" class="demo-ruleForm">
-            <span class="title">账号注册</span>
-        <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">上传头像</i>
-        </el-upload>
+  <div :style="note">
+      <div class="form" >
+      <el-form :model="userinfo" status-icon :rules="rules" ref="userinfo" label-width="100px" class="demo-ruleForm">
+            <p class="title">法律帮</p>
+            <p class="detail">注册法律帮,发现更多可依赖的解答</p>
         <el-button type="text" v-show="false" @click="submited()"></el-button>
         <el-form-item label="手机号" prop="phone">
-            <el-input class="user" v-model.number="userinfo.phone" placeholder="注册的手机号将作为您的登陆手机号" maxlength="11"></el-input>
+            <el-input class="logininput" v-model.number="userinfo.phone" placeholder="注册的手机号将作为您的登陆凭证" maxlength="11"></el-input>
         </el-form-item>
-          <el-form-item label="用户名" prop="username">
-            <el-input class="user" type="username" v-model="userinfo.username" maxlength="10" placeholder="最大支持10个字符"></el-input>
+        <el-form-item label="用户名" prop="username">
+            <el-input class="logininput" type="username" v-model="userinfo.username" maxlength="10" placeholder="最大支持10个字符"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
-            <el-input class="user" type="password" v-model="userinfo.pass" autocomplete="off" show-password maxlength="20" minlength="6" placeholder="最大支持20个字符"></el-input>
+         <el-form-item label="密码" prop="pass">
+            <el-input class="logininput" type="password" v-model="userinfo.pass" autocomplete="off" show-password maxlength="20" minlength="6" placeholder="最大支持20个字符"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-            <el-input class="user"  type="password" v-model="userinfo.checkPass" autocomplete="off" show-password  maxlength="20"  minlength="6" placeholder="最大支持20个字符"></el-input>   
+            <el-input class="logininput"  type="password" v-model="userinfo.checkPass" autocomplete="off" show-password  maxlength="20"  minlength="6" placeholder="最大支持20个字符"></el-input>   
+        </el-form-item>
+        <el-form-item label="验证码"  prop="identify">
+            <el-input class="identify" v-model.number="userinfo.identify" placeholder="请输入验证码" maxlength="4"></el-input>
+            <div class="code" @click="refreshCode">
+            <s-identify :identifyCode="identifyCode"></s-identify>
+            </div>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="submitForm('userinfo')">提交</el-button>
-            <el-button @click="resetForm('userinfo')">重置</el-button>
+            <el-button class="submit"  type="primary" @click="submitForm('userinfo')">注册</el-button>
+            <el-button class="reset" @click="resetForm('userinfo')">重置</el-button>
         </el-form-item>
+        <el-form-item>
+            <p class="warns">注册即代表同意《法律帮协议》《隐私保护指引》注册机构号</p>
+        </el-form-item>
+         <router-link to="/Login" > <p class="haveId">已有账号? 登陆</p></router-link>
         </el-form>
-        </div>
-        <div>
-              <img src="@/assets/logo.png">
-        </div>
       </div>
-      <ab-footer></ab-footer>
+
 </div>
 </template>
 <script>
-import Header from '@/components/Const/Header.vue'
-import Footer from '@/components/Const/Footer.vue'
+import SIdentify from '@/components/Base/Identify.vue'
   export default {
     name:'Regin',
     data() {
@@ -64,7 +59,18 @@ import Footer from '@/components/Const/Footer.vue'
           }
         },1000);
       };
-      var validatePass = (rule, value, callback) => {
+        var checkIdentify = (rule, value, callback)=>{
+           if (value === '') {
+          callback(new Error('请输入验证码'));
+        } 
+        if(this.ID !=value){
+          callback(new Error('验证码输入错误'));
+        }
+        else {
+          callback();
+        }
+        };
+       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } 
@@ -92,125 +98,148 @@ import Footer from '@/components/Const/Footer.vue'
         }
       };
        return {
-        imageUrl: '',
+           identifyCodes: "1234567890",
+           identifyCode: "",
+          note: {
+          backgroundImage: "url(" + require("@/assets/bei.jpg") + ")",
+          backgroundRepeat: "repeat",
+          backgroundSize: "cover",
+          marginTop: "5px",
+          height:"810px"
+          },
+          rules: {
+              phone: [
+                {required: true, validator: checkPhone, trigger: 'blur' }
+              ],
+              identify:[
+                {required: true}
+              ],
+             username:[
+              {required:true,}
+              ],
+             pass: [
+              { required: true,validator: validatePass, trigger: 'blur' }
+              ],
+            checkPass: [
+             { required: true,validator: validatePass2, trigger: 'blur' }
+            ],
+            identify:[  {required:true, validator: checkIdentify, trigger: 'blur'}]
+          
+        },
         userinfo: {
+          phone: '',
+          identify:'',
           username:'',
           pass: '',
           checkPass: '',
-          phone: '',
         },
-        rules2: {
-          username:[
-            {required:true,}
-          ],
-          pass: [
-            { required: true,validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { required: true,validator: validatePass2, trigger: 'blur' }
-          ],
-          phone: [
-            {required: true, validator: checkPhone, trigger: 'blur' }
-          ],
-        }
       };
     },
     methods: {
       submitForm(formName) { 
+     this.$refs[formName].validate((valid) => {
+       if (valid) {
       const axios =require('axios');
       axios.get('/api/add/user/'+this.userinfo.phone+'/'+this.userinfo.username+'/'+this.userinfo.pass)
       .then(function(response){
         console.log(response.data.success)
         var flag = response.data.success;
-        if(flag=true){
+        debugger
+        if(flag==true){
          alert("成功")
+          window.location.href="http://localhost:8081/#/Lofin"
         }else{
-          alert("失败")
+          alert("该手机已注册请直接登陆")
         }
       })
       .then(function(error){
         console.log(error)
       })
+       } else {
+            console.log('error submit!!');
+            return false;
+          }
+       });
       },
-      resetForm(formName) {
+      randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+    refreshCode() {
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
+    },
+    makeCode(o, l) {
+      for (let i = 0; i < l; i++) {
+        this.identifyCode += this.identifyCodes[
+        this.randomNum(0, this.identifyCodes.length)
+        ];
+      }
+      console.log(this.identifyCode);
+      this.ID=this.identifyCode
+    },
+     resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      }
     },
+     mounted() {
+    this.identifyCode = "";
+    this.makeCode(this.identifyCodes, 4);
+  },
     components:{
-        'ab-header':Header,
-        'ab-footer':Footer
+      's-identify':SIdentify
     }
   }
 </script>
 
 <style scoped>
-.user{
+.logininput{
     width: 300px;
     margin-top: 10px;
 }
 .form{
-    width: 1000px;
+    width: 460px;
     height: 600px;
-    border: 1px solid #6EB14A;
-    margin-top: 10px;
-    margin-left: 280px;
+    margin-left: 500px;
+    background-color: whitesmoke;
 }
-.avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  .avatar-uploader-icon[data-v-0f14198e] {
-    font-size: 22px;
-    color: #0061eb;
-    width: 466px;
-    height: 108px;
-    line-height: 120px;
-    text-align: center;
+.title {
+    font-size: 68px;
+    color: #66B1FF;
+    text-align: -webkit-center;
+    margin-top: 8px;
 }
-.el-radio-group{
-    margin-top: 19px
+.detail{
+      color: #66B1FF;
+    font-size: 24px;
+    margin-left: 44px;
+    margin-top: -56px;
 }
-.box-left{
-    float: left;
+.identify.el-input {
+    width: 51%;
 }
-.title{
+.warns{
+      font-size: 11px;
+
+}
+.haveId{
     font-size: 20px;
-    margin-left: 45px;
-    color: #6EB14A
+    background-color: whitesmoke;
+    height: 55px;
+    text-align: center;
+    line-height: 54px;
+}
+.code {
+    width: 114px;
+    height: 40px;
+    border: 1px solid #fffefe;
+    float: right;
+    margin-right: 59px;
+}
+.submit{
+  width: 185px
+}
+.reset{
+  width: 100px
 }
 </style>
 <style>

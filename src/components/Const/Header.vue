@@ -3,8 +3,6 @@
      <div class="nav">
          <router-link to="/"><span>首页</span></router-link>
          <router-link to="/Ask"><span>免费提问</span></router-link>
-         <router-link to="/Login"><p class="login">登陆</p></router-link>
-         <router-link to="/Regin"><p class="login">注册</p></router-link>
          <ul class="box">
              <li>专业律师</li>
              <li>法律援助</li>
@@ -40,15 +38,6 @@
     flex-wrap: nowrap;
     flex-direction: row;
     margin-top:-7px
-}
-.login{
-    float: left;
-    padding-right: 10px;
-    margin-right: 2px;
-    font-size: 12px;
-    line-height: 7px;
-    color: black
-
 }
 span{
     position: relative;

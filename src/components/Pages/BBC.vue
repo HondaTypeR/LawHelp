@@ -54,7 +54,7 @@
                         <el-col :span="19">
                             <div class="rright grid-content bg-purple-dark">
                               <el-card shadow="hover">
-                                    <span class="name">{{item.professorName}}</span>
+                           <router-link to="/Talk"><span class="name">{{item.professorName}}</span></router-link>
                                     <span class="unit">{{item.professorUnit}}</span>
                                     <span class="duty">{{item.professorDuty}}</span>
                                     <p class="good">擅长:</p>
