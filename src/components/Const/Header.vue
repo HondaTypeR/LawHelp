@@ -2,13 +2,13 @@
 <div>
      <div class="nav">
          <router-link to="/"><span>首页</span></router-link>
-         <router-link to="/Ask"><span>免费提问</span></router-link>
+         <router-link :to="{name:'Ask',params:{phone:this.phone,username:this.username,total:this.total,balance:this.balance,role:this.role}}"><span>免费提问</span></router-link>
          <ul class="box">
              <li>专业律师</li>
              <li>法律援助</li>
              <li>今日说法</li>
              <li>经典案例</li>
-            <router-link to="/Professor"> <li>认证专家</li></router-link>
+            <router-link  :to="{name:'Professor',params:{phone:this.phone,username:this.username,total:this.total,balance:this.balance,role:this.role}}"> <li>认证专家</li></router-link>
             <router-link to="/TalkAbout"> <li>沟通交流</li></router-link>
              <li>服务热线</li>
          </ul>
@@ -18,13 +18,28 @@
 <script>
   export default {
     name:'navMenu',
+    props:{
+        phone:{
+            type:String,
+        },
+        username:{
+            type:String,
+        },
+        total:{
+            type:String,
+        },
+        balance:{
+            type:String,
+        },
+        role:{
+            type:Number,
+        }
+    },
     data() {
       return {
-      
       };
     },
     methods: {
-
       }
     }
   

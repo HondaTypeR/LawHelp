@@ -66,7 +66,7 @@ import Home from '@/components/Home.vue'
         },1000);
       };
        return {
-        userinfo: {
+         userinfo: {
           name:'',
           idcard: '',
           phone: '',

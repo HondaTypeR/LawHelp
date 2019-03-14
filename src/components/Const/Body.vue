@@ -1,7 +1,6 @@
 <template>
   <div>
       <div class="search">
-       <ab-search></ab-search>
        <ab-nav></ab-nav>
        <ab-carousel></ab-carousel>
        <ab-tag></ab-tag>
@@ -11,7 +10,6 @@
 </template>
 
 <script>
-import Search from '@/components/Base/Search.vue'
 import Nav from '@/components/Base/Nav.vue'
 import Carousel from '@/components/Base/Carousel.vue'
 import Tag from '@/components/Base/Tag.vue'
@@ -24,7 +22,6 @@ export default {
         }
     },
     components:{
-        'ab-search':Search,
         'ab-nav':Nav,
         'ab-carousel':Carousel,
         'ab-tag':Tag,

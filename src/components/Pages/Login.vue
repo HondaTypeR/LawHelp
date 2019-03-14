@@ -102,15 +102,21 @@ import SIdentify from '@/components/Base/Identify.vue'
     },
     methods: {
       submitForm(formName) {
-       const axios =require('axios');
+        const self = this;
+        const axios =require('axios');
       axios.get('/api/find/user/'+this.userinfo.phone+'/'+this.userinfo.pass)
       .then(function(response){
-        console.log(response.data.success)
+        var nphone=response.data.result[0].phone;
+        var nusername=response.data.result[0].username;
+        var ntotal=response.data.result[0].total;
+        var nbalance=response.data.result[0].balance;
+        var nrole=response.data.result[0].role;
+         console.log(nphone)
+          console.log(response)
         var flag = response.data.success;
         if(flag==true){
           alert("登陆成功")
-        window.location.href="http://localhost:8081/#/"
-
+          self.$router.push({path:"/",query:{p:nphone,u:nusername,t:ntotal,b:nbalance,r:nrole}});
         }else{
           alert("登陆失败")
         }

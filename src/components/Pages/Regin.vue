@@ -137,6 +137,7 @@ import SIdentify from '@/components/Base/Identify.vue'
     },
     methods: {
       submitForm(formName) { 
+        const self = this;
      this.$refs[formName].validate((valid) => {
        if (valid) {
       const axios =require('axios');
@@ -147,9 +148,10 @@ import SIdentify from '@/components/Base/Identify.vue'
         debugger
         if(flag==true){
          alert("成功")
-          window.location.href="http://localhost:8081/#/Lofin"
+         self.$router.replace('/Login')
         }else{
           alert("该手机已注册请直接登陆")
+          
         }
       })
       .then(function(error){
