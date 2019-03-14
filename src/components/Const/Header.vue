@@ -18,23 +18,6 @@
 <script>
   export default {
     name:'navMenu',
-    props:{
-        phone:{
-            type:String,
-        },
-        username:{
-            type:String,
-        },
-        total:{
-            type:String,
-        },
-        balance:{
-            type:String,
-        },
-        role:{
-            type:Number,
-        }
-    },
     data() {
       return {
       };

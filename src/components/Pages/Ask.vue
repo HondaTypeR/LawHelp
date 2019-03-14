@@ -4,7 +4,7 @@
             <img src="@/assets/ask.png" class="image">
             <span class="title">亲，您来快速问医生，是想叫医生帮你解决什么呢？</span>
             <span>{{$route.params.id}}</span>
-
+            {{$route.params.phone}}
             <router-link :to="{ path: '/', query: { p: $route.params.phone,u:$route.params.username,t:$route.params.total,b:$route.params.balance,r:$route.params.role}}"> <el-button type="success" size="mini" style="margin-bottom:10px;margin-left:180px">首页</el-button></router-link>
       </div>
       <div class="body">
@@ -168,7 +168,6 @@
     
     province(newval,oldval){
       console.log(newval)
-      var temp=newval
       this.getCitys();
     }
   }

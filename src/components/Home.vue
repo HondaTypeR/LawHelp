@@ -56,11 +56,11 @@ export default {
     name: 'Home',
     data () {
     return {
-     phone:this.$route.query.p,
-     username:this.$route.query.u,
-     total:this.$route.query.t,
-     balance:this.$route.query.b,
-     role:this.$route.query.r
+     phone:'',
+     username:'',
+     total:'',
+     balance:'',
+     role:'',
      }
      },
     components:{
@@ -68,14 +68,31 @@ export default {
       'ab-body':Body,
       'ab-footer':Footer,
   },
-//   created:function(){
-//       this.$axios.get('/api/find/userinfos/'+this.phone)
-//       .then((res)=>{
-//           console.log(res.data.result[0])
-//           this.phone=res.data.result[0].phone
-//           console.log(this.phone)
-//       })
-//   }
+  // created(){
+  //  var a= JSON.parse( localStorage.getItem("data")); 
+  //  console.log(a)
+  //  function
+  // }
+  created:function(){
+    var self=this
+     var id= JSON.parse( localStorage.getItem("data")); 
+     console.log(id)
+     this.$axios.get("/api/find/userinfos/"+JSON.parse( localStorage.getItem("data")))
+     .then((res)=>{
+       console.log(res.data.result[0].phone)
+       this.phone=res.data.result[0].phone;
+       this.username=res.data.result[0].username;
+       this.total=res.data.result[0].total;
+       this.balance=res.data.result[0].balance;
+       var changeRole=res.data.result[0].role;
+       if(changeRole==1){
+         this.role='专家'
+       }else{
+         this.role='用户'
+       }
+
+     })
+  }
 }
 </script>
 
