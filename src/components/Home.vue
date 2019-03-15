@@ -74,7 +74,7 @@ export default {
   //  function
   // }
   created:function(){
-    var self=this
+     var self=this
      var id= JSON.parse( localStorage.getItem("data")); 
      console.log(id)
      this.$axios.get("/api/find/userinfos/"+JSON.parse( localStorage.getItem("data")))

@@ -42,6 +42,9 @@
                             <el-badge  class="item">
                               <el-tag type="warning">{{item.city}}</el-tag>
                             </el-badge>
+                            <el-badge class="item">
+                             <el-tag type="info">发布人:{{item.username}}</el-tag>
+                             </el-badge> 
                              <el-badge class="item">
                              <el-tag type="danger">发布时间:{{item.createdate}}</el-tag>
                              </el-badge>                        
@@ -97,12 +100,13 @@ export default {
       }
     },
     created:function(){
-      this.$axios.get("/api/find/questions")
+      this.$axios.get("/api/find/questions/"+JSON.parse( localStorage.getItem("data")))
       .then((res)=>{
         var respon =res.data;
         this.messages=respon
         console.log(this.messages)
       })
+
     },
    
 }

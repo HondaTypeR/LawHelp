@@ -37,9 +37,6 @@
                        <el-option label="琐事" value="琐事"></el-option>
              </el-select>
          </el-form-item>
-          <el-form-item label="手机号码 ：" prop="phone">
-             <el-input v-model.number="ruleForm.phone" placeholder="请输入内容" maxlength="11"></el-input>
-          </el-form-item>
           <el-form-item>
              <el-button type="success" @click="submitForm('ruleForm')">发起提问</el-button>
                <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -55,23 +52,6 @@
 <script>
   export default {
     data() {
-       var TEL = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
-        var checkPhone = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('手机号不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          }   
-          if(!TEL.test(value)){
-            callback(new Error('手机号格式有误，请重新输入'))
-          }
-          else{
-            callback();
-          }
-        },100);
-      };
       return {
         ruleForm: {
         title:"",
@@ -80,6 +60,7 @@
         phone:'',   
         province:'',
         city:'',
+        username:'',
         },
         provinces:[],
         citys:[],
@@ -91,9 +72,6 @@
           details: [
             { required: true, message: '请填写详情', trigger: 'blur' },
             { min: 3, max: 105, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
-          phone:[
-            {required:true,validator: checkPhone, trigger: 'blur'},
           ],
           type:[
             {required:true, trigger: 'blur'}
@@ -117,10 +95,11 @@
           data:{
             title:this.ruleForm.title,
             details:this.ruleForm.details,
-            phone:this.ruleForm.phone,
             type:this.ruleForm.type,
+            username:this.ruleForm.username,           
+            phone:this.ruleForm.phone,
             province:this.ruleForm.province,
-            city:this.ruleForm.city
+            city:this.ruleForm.city,
           }
         }).then((res)=>{
           console.log(res.data)
@@ -152,6 +131,13 @@
         this.provinces=respon
         console.log(respon)
       })
+      this.$axios.get("/api/find/userinfos/"+JSON.parse( localStorage.getItem("data")))
+     .then((res)=>{
+      var ID =res.data.result[0].phone;
+      var USERNAME=res.data.result[0].username;
+      this.ruleForm.phone=ID;
+      this.ruleForm.username=USERNAME;
+     })
     },
     computed:{
      province(){

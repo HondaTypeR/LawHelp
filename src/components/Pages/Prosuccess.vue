@@ -6,11 +6,10 @@
                 <img src="@/assets/success.jpg" class="img">
             </div>   
             <div class="right-box">
-                <h1>恭喜，发布成功</h1>
+                <h1>恭喜，提交成功，请耐心等待</h1>
                 <img src="@/assets/msg.png" class="msg">
-                <p class="warn">为保证信息质量，我们会对发布的信息进行抽查审核，如违规我们会进行处理，敬请谅解</p>
-                <router-link to="/Questions"><p class="msg_1">查看信息</p></router-link>
-                <router-link to="/Ask"><p class="msg_2">再发一条</p></router-link>
+                <p class="warn">我们正在验证您提供的信息，请耐心等待</p>
+                <router-link to="/"><p class="msg_2">先去逛逛</p></router-link>
             </div>
         </div>
         <ab-footer></ab-footer>
@@ -29,14 +28,9 @@ export default {
         'ab-header':Header,
         'ab-footer':Footer,
     },
-     created:function(){
-     this.$axios.get("/api/find/userinfos/"+JSON.parse( localStorage.getItem("data")))
-     .then((res)=>{
-       this.username=res.data.result[0].username;
-       var ID = res.data.result[0].phone;
-       console.log(ID)
-     })
-  }
+    created:{
+        
+    }
 }
 </script>
 

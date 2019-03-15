@@ -11,6 +11,7 @@ import Professor from '@/components/Pages/Professor'
 import Success from '@/components/Pages/Success'
 import Questions from '@/components/Pages/Questions'
 import BBC from '@/components/Pages/BBC'
+import Prosuccess from '@/components/Pages/Prosuccess'
 Vue.use(Router)
 
 export default new Router({
@@ -69,6 +70,11 @@ export default new Router({
       path:'/BBC',
       name: 'BBC',
       component: BBC
+    },
+    {
+      path:'/Prosuccess',
+      name: 'Prosuccess',
+      component: Prosuccess
     }
   ]
 })

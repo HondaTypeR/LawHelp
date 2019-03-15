@@ -105,7 +105,7 @@
   export default {
     data() {
       return {
-        id:'26',
+       
         messages:[],
         professors:[]
        }
@@ -115,14 +115,15 @@
       
     },
      created:function(){
-      this.$axios.get("/api/find/questions/"+this.id)
+       var id =this.$route.params.ID
+      this.$axios.get("/api/find/questionsr/"+id)
       .then((res)=>{
         var respon =res.data;
         this.messages=respon
         console.log(this.messages)
       })
 
-        this.$axios.get("/api/find/professorRes/"+this.id)
+        this.$axios.get("/api/find/professorRes/"+id)
       .then((res)=>{
         var respons =res.data;
         this.professors=respons
