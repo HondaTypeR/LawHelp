@@ -113,6 +113,8 @@ import SIdentify from '@/components/Base/Identify.vue'
         var nrole=response.data.result[0].role;
          console.log(nphone)
         localStorage.setItem('data',JSON.stringify(response.data.result[0].phone))
+        localStorage.setItem('role',JSON.stringify(response.data.result[0].role))
+        localStorage.setItem('name',JSON.stringify(response.data.result[0].username))
         var flag = response.data.success;
         if(flag==true){
           alert("登陆成功")

@@ -9,7 +9,7 @@
 
                         <div v-for="item in messages">
                           <el-card shadow="hover" class="cardbox">
-                            <router-link to="/BBC"> <h2>{{item.title}}</h2></router-link>
+                            <router-link to="/MyQuestion"> <h2>{{item.title}}</h2></router-link>
                              <p>{{item.details}}</p>
                             <el-badge :value="200" :max="99" class="item">
                             <el-button size="small">评论</el-button>

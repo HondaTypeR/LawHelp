@@ -39,24 +39,8 @@
                               <el-tag>{{item.createdate}}</el-tag>
                            </el-badge>
                            <br> <br>
-                          <el-button type="success" @click="isOpen()">回复</el-button>        
-                   </el-card>
-                           <el-dialog
-                              title="提示"
-                             :visible.sync="dialogVisible"
-                             width="30%"
-                            :before-close="handleClose">
-                             <el-input
-                             type="textarea"
-                             :rows="5"
-                             placeholder="请输入内容" 
-                             v-model="textarea">
-                             </el-input>
-                            <span slot="footer" class="dialog-footer">
-                            <el-button @click="dialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="submitForm()">确 定</el-button>
-                             </span>
-                          </el-dialog>
+                           <router-link to="/Ask"> <el-button type="success">我也要提问</el-button></router-link>
+                 </el-card>
                 <div v-for="item in professors">
                      <el-row>
                           <h3 style="padding-left:20px" class="linetext">专家回复</h3>
@@ -71,7 +55,6 @@
                             <div class="rright grid-content bg-purple-dark">
                               <el-card shadow="hover">
                            <router-link to="/Talk"><span class="name">{{item.professorName}}</span></router-link>
-                              <el-button type="danger" class="money">付费咨询</el-button>
                                     <span class="unit">{{item.professorUnit}}</span>
                                     <span class="duty">{{item.professorDuty}}</span>
                                     <p class="good">擅长:</p>
@@ -89,24 +72,6 @@
                          <div  class="textareas">
                           <p class="time">{{item.professorDate}}</p>
                           <p class="texts">{{item.professorRes}}</p>
-                          <!-- <div class="zhuiwen"><p>{{item.askAgain}}</p></div>
-                          <el-button class="zask" type="text" @click="dialogVisibles = true">追问</el-button>
-                                <el-dialog class="dig"
-                                    title="提示"
-                                  :visible.sync="dialogVisibles"
-                                  width="50%"
-                                  :before-close="handleClose">
-                                  <el-input
-                                  type="textarea"
-                                  :rows="5"
-                                  placeholder="请输入内容" 
-                                  v-model="textareaagain">
-                                  </el-input>
-                                  
-                                  <el-button class="dis" @click="dialogVisibles = false">取 消</el-button>
-                                  <el-button type="primary" @click="submitAgain('ruleForm')">确 定</el-button>
-                                  
-                                </el-dialog> -->
                               </div>
                              </div>
                         </div>
@@ -116,16 +81,15 @@
                       
 
 
-                        <div v-for="item in peoplemes">
-                            <el-card :body-style="{ padding: '0px' }">
-                            <h3 style="padding-left:20px" class="linetext">网友回复区</h3>
-                                <div  class="textareass">
-                                    <p class="times">{{item.peopleName}}--{{item.createDate}}</p>
-                                    <p class="texts"> {{item.peopleRes}}</p>
-                              
-                                </div>
-                            </el-card>
-                        </div>
+
+                        <!-- <el-card :body-style="{ padding: '0px' }">
+                        <h3 style="padding-left:20px" class="linetext">网友回复区</h3>
+                      <div  class="textareass">
+                          <p class="times">Jack---2019-03-06 01:12:15</p>
+                          <p class="texts"> 从你描述的情况来分析，踝关节扭伤之后仍然存在脚肿的情况，大多是由于存在一血没有完全吸收，考虑应用活血化瘀的药物，同时配合针灸效果更好。</p>
+                     
+                    </div>
+                        </el-card> -->
                 </div>
                   </el-col>
                   <el-col :span="6"><div class="right grid-content bg-purple-dark"></div></el-col>
@@ -141,129 +105,31 @@
   export default {
     data() {
       return {
-        dialogVisible: false,
-        textarea:'',
-        textareaagain:'',
+       id:'0',
         messages:[],
-        peoplemes:[],
         professors:[]
        }
     },
     methods: {
-      isOpen(){
-        this.dialogVisible=true;
-      },
-      submitForm(){
-        debugger
-        this.dialogVisible=false
-        var roles = JSON.parse( localStorage.getItem("role"))
-        if(roles==1){
-          this.$axios({
-          method:"post",
-          url:"/api/add/professorres",
-          data:{
-            professorName:this.name,
-            professorRes:this.textarea,
-            professorUnit:this.unit,
-            professorDuty:this.duty,
-            goodat:this.goodat,
-            parentId:JSON.parse( localStorage.getItem("parentID")),
-          }
-        }).then((res)=>{
-            this.textarea=''
-        })
-        }else{
-          this.$axios({
-          method:"post",
-          url:"/api/add/peopleres",
-          data:{
-            peopleName:JSON.parse( localStorage.getItem("name")),
-            peopleRes:this.textarea,
-            parentid:JSON.parse( localStorage.getItem("parentID")),
-          }
-        }).then((res)=>{
-            this.textarea=''
-        })
-        }
-      },
-      //  submitForm() {
-      //  this.dialogVisible=false
-      //     this.$axios({
-      //     method:"post",
-      //     url:"/api/add/professorres",
-      //     data:{
-      //       professorName:this.name,
-      //       professorRes:this.textarea,
-      //       professorUnit:this.unit,
-      //       professorDuty:this.duty,
-      //       goodat:this.goodat,
-      //       parentId:JSON.parse( localStorage.getItem("parentID")),
-      //     }
-      //   }).then((res)=>{
-      //       this.textarea=''
-      //   })
-      // },
-      submitAgain(formName) {
-       this.dialogVisibles=false
-          this.$axios({
-          method:"post",
-          url:"/api/add/professorres",
-          data:{
-            professorName:this.name,  
-            professorRes:this.textarea,
-            professorUnit:this.unit,
-            professorDuty:this.duty,
-            goodat:this.goodat,
-            parentId:JSON.parse( localStorage.getItem("parentID")),
-            askAgain:this.textareaagain,
-          }
-        }).then((res)=>{
-            this.textareaagain=''
-            console.log(this.textareaagain),
-            console.log(this.textarea)
-        })
-      },
-       handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
+      
       
     },
      created:function(){
-       var flag=JSON.parse( localStorage.getItem("data"));
-      this.$axios.get("/api/find/questionsr/"+JSON.parse( localStorage.getItem("parentID")))
+       var id =this.$route.params.ID
+      this.$axios.get("/api/find/questionsr/"+this.id)
       .then((res)=>{
         var respon =res.data;
         this.messages=respon
         console.log(this.messages)
       })
 
-        this.$axios.get("/api/find/professorRes/"+JSON.parse( localStorage.getItem("parentID")))
+        this.$axios.get("/api/find/professorRes/"+this.id)
       .then((res)=>{
         var respons =res.data;
         this.professors=respons
         console.log(this.professors)
       })
-
-      this.$axios.get("/api/find/peopleres/"+JSON.parse( localStorage.getItem("parentID")))
-     .then((res)=>{
-       var peopleRespon = res.data
-       this.peoplemes =peopleRespon
-       console.log(res.data)
-     })
-    
-
-      this.$axios.get("/api/find/professors/"+JSON.parse( localStorage.getItem("data")))
-     .then((res)=>{
-       this.name=res.data[0].name;
-       this.unit=res.data[0].unit;
-       this.duty=res.data[0].duty;
-       this.goodat=res.data[0].goodat;
-     })
-     }
+    },
   }
 </script>
 
@@ -392,24 +258,5 @@ p.texts {
     text-indent: 59em;
     font-size: 14px;
     color: tomato;
-}
-.zask{
-    color: green;
-    float: right;
-}
-.dis{
-     margin-left: 275px;
-    margin-top: 20px;
-}
-.zhuiwen{
-    height: auto;
-    margin: 20px;
-    background-color: white;
-    border-radius: 6px;
-    padding-left: 30px;
-    color: lawngreen;
-}
-.money{
-  float: right;
 }
 </style>

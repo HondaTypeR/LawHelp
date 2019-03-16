@@ -3,14 +3,8 @@
       <div style="width:70%;float:left">
   <el-tabs>
     <el-tab-pane label="时事新闻">
-        <div class="border">
-            <li> <a href="">男子遇车祸心脏骤停 路过医生跪地施救</a></li>
-            <li> <a href="">老板一直没有签订劳动合同，法人变更了，符合劳动法规定的未签订劳动合同最多可索赔11个月工资的条件吗？</a></li>
-            <li> <a href="">老板一直没有签订劳动合同，法人变更了，符合劳动法规定的未签订劳动合同最多可索赔11个月工资的条件吗？</a></li>
-            <li> <a href="">老板一直没有签订劳动合同，法人变更了，符合劳动法规定的未签订劳动合同最多可索赔11个月工资的条件吗？</a></li>
-            <li> <a href="">老板一直没有签订劳动合同，法人变更了，符合劳动法规定的未签订劳动合同最多可索赔11个月工资的条件吗？</a></li>
-            <li> <a href="">老板一直没有签订劳动合同，法人变更了，符合劳动法规定的未签订劳动合同最多可索赔11个月工资的条件吗？</a></li>
-            <li> <a href="">老板一直没有签订劳动合同，法人变更了，符合劳动法规定的未签订劳动合同最多可索赔11个月工资的条件吗？</a></li>
+        <div class="border" v-for="(item,index) in news">
+         <router-link to="/NewsDetail">  <li> <span @click="getIndex(index)">{{item.title}}</span></li></router-link>
         </div>
     </el-tab-pane>
   </el-tabs>
@@ -25,8 +19,23 @@ export default {
     name:'News',
     data(){
         return{
-
+            news:[]
         }
+    },
+    created: function(){
+        this.$axios.get('/api/find/news')
+        .then((res)=>{
+            var respon = res.data
+            console.log(respon)
+            this.news=respon
+        })
+    },
+    methods:{
+         getIndex(index){   
+             console.log(index)    
+            localStorage.setItem('newsID',JSON.stringify(index))
+          
+      }
     }
 }
 </script>

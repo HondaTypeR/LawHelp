@@ -9,7 +9,7 @@
                 <h1>恭喜，发布成功</h1>
                 <img src="@/assets/msg.png" class="msg">
                 <p class="warn">为保证信息质量，我们会对发布的信息进行抽查审核，如违规我们会进行处理，敬请谅解</p>
-                <router-link to="/Questions"><p class="msg_1">查看信息</p></router-link>
+                <router-link to="/TalkAbout"><p class="msg_1">查看信息</p></router-link>
                 <router-link to="/Ask"><p class="msg_2">再发一条</p></router-link>
             </div>
         </div>

@@ -12,6 +12,8 @@ import Success from '@/components/Pages/Success'
 import Questions from '@/components/Pages/Questions'
 import BBC from '@/components/Pages/BBC'
 import Prosuccess from '@/components/Pages/Prosuccess'
+import MyQuestion from '@/components/Pages/MyQuestion'
+import NewsDetail from '@/components/Pages/NewsDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -75,6 +77,16 @@ export default new Router({
       path:'/Prosuccess',
       name: 'Prosuccess',
       component: Prosuccess
-    }
+    },
+    {
+      path:'/MyQuestion',
+      name:'MyQuestion',
+      component: MyQuestion
+    },
+    {
+      path: '/NewsDetail',
+      name: 'NewsDetail',
+      component: NewsDetail
+    },
   ]
 })

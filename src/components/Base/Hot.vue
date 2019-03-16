@@ -108,6 +108,7 @@ export default {
       getIndex(index){
           this.dialogVisible=true;
           this.questionId=index
+          localStorage.setItem('parentID',JSON.stringify(index))
           console.log( this.questionId)
       }
     },
