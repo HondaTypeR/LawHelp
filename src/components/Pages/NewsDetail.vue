@@ -6,6 +6,7 @@
           </el-header>
           <el-main>
               <h1 class="title">{{title}}</h1>
+              <p class="time">2019-05-04</p>
               <div class="message">
                   <p class="content">{{content}}</p>
               </div>
@@ -50,10 +51,15 @@ export default {
 .content{
     text-indent:2em;
     text-align: center;
+    background-color: wheat;
 }
 .message {
     width: 550px;
     position: relative;
     left: 423px;
+}
+.time{
+    text-align: center;
+    color: blue  
 }
 </style>

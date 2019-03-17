@@ -23,6 +23,12 @@ export default {
     return {
     
     };
+  },
+  created:function(){
+    this.$axios.get('/api/find/hotprofessor')
+    .then((res)=>{
+      console.log(res.data)
+    })
   }
 }
 </script>

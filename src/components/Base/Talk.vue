@@ -6,14 +6,14 @@
         </div>
         <div class="float">
             <img src="@/assets/role.jpg" style="border-radius:60px">
-            <span class="name">张锋</span>
-            <span class="post">副主任医师</span>
-            <span class="unit">吉林省法院</span>
-            <span class="goodat">简介 | 擅长</span>
-            <span class="about">简介:</span>
-            <span class="gmsg">副主任医师，参加工作18年，对常见妇科疾病有比较深入的研究，擅长各种不孕不育的检查和治疗。服务范围包括：准确的推断怀孕日期，妇科炎症的治疗，妇科内分泌疾病的诊治，孕期全程跟踪检查，优生优育和遗传病咨询，不孕不育原因的查找和治疗等。</span>
+            <span class="name">{{name}}</span>
+            <span class="post">{{duty}}</span>
+            <span class="unit">{{unit}}</span>
+            <span class="goodat">证件 | 擅长</span>
+            <span class="about">证件号:</span>
+            <span class="gmsg">{{assestid}}</span>
             <span class="good">擅长:</span>
-            <span class="amsg">功能失调性子宫出血,习惯性流产,男性不育,宫颈糜烂,子宫肌瘤,外阴瘙痒,卵巢囊肿,宫颈炎,不孕症,流产,外阴阴道念珠菌病,多发性内分泌腺瘤病,月经失调</span>
+            <span class="amsg">{{goodat}}</span>
         </div>
         <div>
             <div class="none">
@@ -36,7 +36,12 @@ export default {
     name:'Talk',
     data(){
         return {
-           activeName: 'second'
+           activeName: 'second',
+           name:'',
+           unit:'',
+           duty:'',
+           goodat:'',
+           assestid:''
       };
     },
     components:{
@@ -45,6 +50,18 @@ export default {
         'ab-talkOne':TalkOne,
         'ab-hot':Hot
     },
+    created:function(){
+    this.$axios.get('/api/find/hotprofessor/'+JSON.parse( localStorage.getItem("cardid")))
+    .then((res)=>{
+       console.log(res)
+       this.name=res.data[0].name;
+       this.duty=res.data[0].duty;
+       this.unit=res.data[0].unit;
+       this.goodat=res.data[0].goodat;
+       this.assestid=res.data[0].assestid;
+       
+    })
+  },
     
 }
 </script>
@@ -60,11 +77,11 @@ export default {
     left: 200px;
 }
 .name{
-    font-size: 25px;
+    font-size: 23px;
     position: absolute;
-    top: 7px;
+    top: 15px;
     left: 250px;
-    width: 50px;
+    width: 71px;
 }
 .post{
     position: absolute;
