@@ -17,13 +17,13 @@
             </div>
         </el-form-item>
         <el-form-item>
-            <el-button type="success" @click="submitForm('userinfo')" class="login">登陆</el-button>
+            <el-button  type="success" plain @click="submitForm('userinfo')" class="login">登陆</el-button>
         </el-form-item>
          <el-form-item>
             <p class="warns">登陆即代表同意《法律帮协议》《隐私保护指引》登陆机构号</p>
         </el-form-item>
          </el-form-item>
-         <router-link to="/Regin" > <p class="haveId">已有账号? 登陆</p></router-link>
+         <router-link to="/Regin" > <p class="haveId">没有账号? 注册</p></router-link>
         </el-form>
         </el-form>
       </div>
@@ -56,12 +56,14 @@ import SIdentify from '@/components/Base/Identify.vue'
            if (value === '') {
           callback(new Error('请输入验证码'));
         } 
+        setTimeout(() => {
         if(this.ID !=value){
           callback(new Error('验证码输入错误'));
         }
         else {
           callback();
         }
+        },100);
         };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
@@ -96,12 +98,18 @@ import SIdentify from '@/components/Base/Identify.vue'
           pass: [
             { required: true,validator: validatePass, trigger: 'blur' }
           ],
-           identify:[  {required:true, validator: checkIdentify, trigger: 'blur'}]
+          identify:[  {required:true, validator: checkIdentify, trigger: 'blur'}]
         }
       };
     },
     methods: {
       submitForm(formName) {
+          const h = this.$createElement;
+
+        this.$notify({
+          title: '系统提示',
+          message: h('i', { style: 'color: teal'}, '登陆成功，请自觉遵守本站条例')
+        });
         const self = this;
         const axios =require('axios');
       axios.get('/api/find/user/'+this.userinfo.phone+'/'+this.userinfo.pass)
@@ -115,9 +123,10 @@ import SIdentify from '@/components/Base/Identify.vue'
         localStorage.setItem('data',JSON.stringify(response.data.result[0].phone))
         localStorage.setItem('role',JSON.stringify(response.data.result[0].role))
         localStorage.setItem('name',JSON.stringify(response.data.result[0].username))
+        localStorage.setItem('total',JSON.stringify(response.data.result[0].total))
         var flag = response.data.success;
         if(flag==true){
-          alert("登陆成功")
+         
           self.$router.push({path:"/",query:{p:nphone,u:nusername,t:ntotal,b:nbalance,r:nrole}});
         }else{
           alert("登陆失败")

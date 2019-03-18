@@ -14,6 +14,7 @@ import BBC from '@/components/Pages/BBC'
 import Prosuccess from '@/components/Pages/Prosuccess'
 import MyQuestion from '@/components/Pages/MyQuestion'
 import NewsDetail from '@/components/Pages/NewsDetail'
+import Me from '@/components/Pages/Me'
 Vue.use(Router)
 
 export default new Router({
@@ -87,6 +88,11 @@ export default new Router({
       path: '/NewsDetail',
       name: 'NewsDetail',
       component: NewsDetail
+    },
+    {
+      path: '/Me',
+      name: 'Me',
+      component: Me
     },
   ]
 })

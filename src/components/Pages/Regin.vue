@@ -132,6 +132,9 @@ import SIdentify from '@/components/Base/Identify.vue'
           username:'',
           pass: '',
           checkPass: '',
+          role:0,
+          balance:'0',
+          toal:'0'
         },
       };
     },
@@ -141,7 +144,7 @@ import SIdentify from '@/components/Base/Identify.vue'
      this.$refs[formName].validate((valid) => {
        if (valid) {
       const axios =require('axios');
-      axios.get('/api/add/user/'+this.userinfo.phone+'/'+this.userinfo.username+'/'+this.userinfo.pass)
+      axios.get('/api/add/user/'+this.userinfo.phone+'/'+this.userinfo.username+'/'+this.userinfo.pass+'/'+this.userinfo.role+'/'+this.userinfo.balance+'/'+this.userinfo.toal)
       .then(function(response){
         console.log(response.data.success)
         var flag = response.data.success;

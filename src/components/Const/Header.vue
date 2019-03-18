@@ -81,7 +81,7 @@ span{
     font-size: 13px
 }
 .now{
-    width: 108px !important;
+    width: 180px  !important;
     color: red
 }
 </style>

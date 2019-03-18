@@ -141,6 +141,7 @@
   export default {
     data() {
       return {
+        total:'',
         dialogVisible: false,
         textarea:'',
         textareaagain:'',
@@ -185,6 +186,8 @@
             this.textarea=''
         })
         }
+        this.total++;
+        this.$axios.get('/api/update/total/'+this.total+'/'+JSON.parse(localStorage.getItem("data")))
       },
       //  submitForm() {
       //  this.dialogVisible=false
@@ -203,26 +206,26 @@
       //       this.textarea=''
       //   })
       // },
-      submitAgain(formName) {
-       this.dialogVisibles=false
-          this.$axios({
-          method:"post",
-          url:"/api/add/professorres",
-          data:{
-            professorName:this.name,  
-            professorRes:this.textarea,
-            professorUnit:this.unit,
-            professorDuty:this.duty,
-            goodat:this.goodat,
-            parentId:JSON.parse( localStorage.getItem("parentID")),
-            askAgain:this.textareaagain,
-          }
-        }).then((res)=>{
-            this.textareaagain=''
-            console.log(this.textareaagain),
-            console.log(this.textarea)
-        })
-      },
+      // submitAgain(formName) {
+      //  this.dialogVisibles=false
+      //     this.$axios({
+      //     method:"post",
+      //     url:"/api/add/professorres",
+      //     data:{
+      //       professorName:this.name,  
+      //       professorRes:this.textarea,
+      //       professorUnit:this.unit,
+      //       professorDuty:this.duty,
+      //       goodat:this.goodat,
+      //       parentId:JSON.parse( localStorage.getItem("parentID")),
+      //       askAgain:this.textareaagain,
+      //     }
+      //   }).then((res)=>{
+      //       this.textareaagain=''
+      //       console.log(this.textareaagain),
+      //       console.log(this.textarea)
+      //   })
+      // },
        handleClose(done) {
         this.$confirm('确认关闭？')
           .then(_ => {
@@ -233,6 +236,11 @@
       
     },
      created:function(){
+       var total = localStorage.getItem("total");
+       var phone = localStorage.getItem("data");
+       this.total=total
+       console.log(this.total)
+       console.log(phone)
        var flag=JSON.parse( localStorage.getItem("data"));
       this.$axios.get("/api/find/questionsr/"+JSON.parse( localStorage.getItem("parentID")))
       .then((res)=>{

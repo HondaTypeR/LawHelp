@@ -14,6 +14,15 @@
             <span class="gmsg">{{assestid}}</span>
             <span class="good">擅长:</span>
             <span class="amsg">{{goodat}}</span>
+            <span class="grade">评分</span>
+            <el-rate
+            class="grades"
+             v-model="value5"
+             disabled
+            show-score
+            text-color="#ff9900"
+            score-template="{value}">
+            </el-rate>
         </div>
         <div>
             <div class="none">
@@ -41,7 +50,8 @@ export default {
            unit:'',
            duty:'',
            goodat:'',
-           assestid:''
+           assestid:'',
+            value5: 4
       };
     },
     components:{
@@ -132,6 +142,17 @@ export default {
     background-color: #05b605;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.grades{
+    position: absolute;
+    left: 180px;
+    width: 400px;
+    top: 269px;
+}
+.grade{
+    position: absolute;
+    left: 138px;
+    top: 269px;
 }
 </style>
 <style>
