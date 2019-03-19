@@ -4,7 +4,7 @@ OPEN (1)： 已经建立连接，可以进行通讯；
 CLOSING (2)：通过关闭握手，正在关闭连接；
 CLOSED (3)：连接已经关闭或无法打开； -->
 <template>
-  <div>
+  <div class="talkbox">
        <el-card class="box-card header">
             <span>{{status}}</span>
             <el-button type="danger" class="close"  @click="closeWebSocket()">关闭对话</el-button>
@@ -12,6 +12,7 @@ CLOSED (3)：连接已经关闭或无法打开； -->
      <el-card class="box-card talk">
     <div class="border">
     <div v-html="data"></div>
+    <!-- <div class="tt">{{data}}</div> -->
     </div>
      </el-card>
      <el-card class="box-card send">
@@ -75,7 +76,9 @@ export default {
       this.status = "建立连接，可以进行通讯" + '   状态码：' + this.websocket.readyState;
     },
     setOnmessageMessage(event) {
-      this.data+= '服务端返回：' + event.data+'<br/>';
+      var user=JSON.parse( localStorage.getItem("name"))
+      
+      this.data+= user+':' + event.data;
       console.log(event.data)
     },
     setOncloseMessage() {
@@ -122,5 +125,11 @@ export default {
     float: right;
     line-height: 13px !important;
     padding: 4px 24px !important;
+}
+.talkbox{
+    margin-left: 400px  
+}
+.tt{
+    border: 1px solid
 }
 </style>

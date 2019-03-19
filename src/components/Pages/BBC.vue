@@ -71,7 +71,7 @@
                             <div class="rright grid-content bg-purple-dark">
                               <el-card shadow="hover">
                            <router-link to="/Talk"><span class="name">{{item.professorName}}</span></router-link>
-                              <el-button type="danger" class="money">付费咨询</el-button>
+                             <router-link to="/OneToOne"> <el-button type="danger" class="money">付费咨询</el-button></router-link>
                                     <span class="unit">{{item.professorUnit}}</span>
                                     <span class="duty">{{item.professorDuty}}</span>
                                     <p class="good">擅长:</p>

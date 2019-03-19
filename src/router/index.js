@@ -15,6 +15,7 @@ import Prosuccess from '@/components/Pages/Prosuccess'
 import MyQuestion from '@/components/Pages/MyQuestion'
 import NewsDetail from '@/components/Pages/NewsDetail'
 import Me from '@/components/Pages/Me'
+import OneToOne from '@/components/Pages/OneToOne'
 Vue.use(Router)
 
 export default new Router({
@@ -93,6 +94,11 @@ export default new Router({
       path: '/Me',
       name: 'Me',
       component: Me
+    },
+    {
+      path: '/OneToOne',
+      name: 'MOneToOnee',
+      component: OneToOne
     },
   ]
 })
