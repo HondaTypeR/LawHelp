@@ -11,8 +11,11 @@ CLOSED (3)：连接已经关闭或无法打开； -->
        </el-card>
      <el-card class="box-card talk">
     <div class="border">
-    <div v-html="data"></div>
+    <!-- <div v-html="data"></div> -->
     <!-- <div class="tt">{{data}}</div> -->
+    <div v-for="item in messages">
+     <div class="messages">-{{item}}--{{time}}</div>
+    </div>
     </div>
      </el-card>
      <el-card class="box-card send">
@@ -35,13 +38,15 @@ export default {
   data() {
     return {
       text: '',
-      data: '',
+      data: [],
+      time:'',
+      messages:[],
       status:'',
       websocket: null
     }
   },
   mounted() {
-      debugger
+    debugger
     if ('WebSocket' in window) {
       this.websocket = new WebSocket('ws://localhost:8080/websocket');
       this.initWebSocket()
@@ -77,9 +82,33 @@ export default {
     },
     setOnmessageMessage(event) {
       var user=JSON.parse( localStorage.getItem("name"))
-      
-      this.data+= user+':' + event.data;
-      console.log(event.data)
+       var now = new Date();
+      now.getTime()
+      var year = now.getFullYear();
+      var month = now.getMonth()+1;
+      var day = now.getDate();
+      var hh = now.getHours();
+      var mm = now.getMinutes();
+      var ss = now.getSeconds();
+      var clock = year + "-";
+      if(month<10)
+      clock+="0";
+      clock +=month+"-";
+      if(day<10)
+      clock+="0";
+      clock+=day+" ";
+      if(hh<10)
+      clock += "0";
+      clock+=hh+":";
+      if(mm<10) clock +='0';
+      clock+=mm +":";
+      if(ss<10) clock +='0';
+      clock+=ss;
+      this.time=clock;
+    
+      // this.data+= user+':' + event.data;
+      this.messages.push(user+':'+ event.data)
+      console.log(this.messages)
     },
     setOncloseMessage() {
       this.status = "本次通话结束" + '   状态码：' + this.websocket.readyState;
@@ -129,7 +158,13 @@ export default {
 .talkbox{
     margin-left: 400px  
 }
-.tt{
-    border: 1px solid
+.messages {
+    border: 1px solid;
+    width: 350px;
+    border-radius: 8px;
+    line-height: 28px;
+    background-color: whitesmoke;
+    text-indent: 1em;
+    margin-bottom: 10px;
 }
 </style>
