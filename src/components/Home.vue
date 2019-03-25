@@ -35,7 +35,7 @@
 </el-form>
 
                                         </el-dialog>
-                                       <router-link to="/Login"><i class="el-icon-circle-close"></i></router-link>
+                                       <router-link to="/Login"><i class="el-icon-circle-close" @click="clearLocalStrorage()"></i></router-link>
                                         <el-col :span="12">
                                         <img src="@/assets/role.jpg" class="thisimg">
                                          </el-col>
@@ -45,7 +45,6 @@
                                         <p class="thisTotal">账户余额:{{this.total}}</p>
                                          <p class="thisBalance">用户积分:{{this.balance}}</p>
                                         <p class="thisUserRole">身份:{{this.role}}</p>
-                                        {{$route.params.phone}}
                                          </el-col>
                                      </el-card>
                                 </el-row>
@@ -199,6 +198,9 @@ export default {
       },
        resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      clearLocalStrorage(){
+        localStorage.clear();
       }
    }
 }

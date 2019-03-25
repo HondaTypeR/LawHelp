@@ -12,12 +12,18 @@
             <span class="goodat">证件 | 擅长</span>
             <span class="about">证件号:</span>
             <span class="gmsg">{{assestid}}</span>
+            <span class="phone">手机:</span>
+            <span class="phones">{{phone}}</span>
+            <span class="email">邮箱:</span>
+            <span class="emails">{{email}}</span>
+            <span class="address">地址:</span>
+            <span class="addresss">{{address}}</span>
             <span class="good">擅长:</span>
             <span class="amsg">{{goodat}}</span>
             <span class="grade">评分</span>
             <el-rate
             class="grades"
-             v-model="value5"
+             v-model="value"
              disabled
             show-score
             text-color="#ff9900"
@@ -51,7 +57,10 @@ export default {
            duty:'',
            goodat:'',
            assestid:'',
-            value5: 4
+           value: '',
+           address:'',
+           email:'',
+           phone:'',
       };
     },
     components:{
@@ -69,6 +78,10 @@ export default {
        this.unit=res.data[0].unit;
        this.goodat=res.data[0].goodat;
        this.assestid=res.data[0].assestid;
+       this.value=res.data[0].value;
+       this.address=res.data[0].address;
+       this.email=res.data[0].email;
+       this.phone=res.data[0].phone;
        
     })
   },
@@ -153,6 +166,40 @@ export default {
     position: absolute;
     left: 138px;
     top: 269px;
+}
+.phone{
+    position: absolute;
+    top: 175px;
+    left: 455px;
+    width: 40px;
+}
+.phones{
+    position: absolute;
+    top: 175px;
+    left: 500px;
+}
+.email{
+    position: absolute;
+    top: 229px;
+    left: 455px;
+    width: 37px;
+}
+.emails{
+    position: absolute;
+    top: 230px;
+    left: 500px;
+}
+.address{
+    position: absolute;
+    top: 268px;
+    width: 40px;
+    left: 456px;
+}
+.addresss{
+    position: absolute;
+    top: 268px;
+    left: 500px;
+    width: 320px;
 }
 </style>
 <style>

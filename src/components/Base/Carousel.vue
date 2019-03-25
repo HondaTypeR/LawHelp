@@ -1,10 +1,11 @@
 <template>
   <div>
       <el-carousel :interval="4000" type="card" height="35  0px">
-      <el-carousel-item v-for="item in 6" :key="item">
-      <h3>{{ item }}</h3>
-    </el-carousel-item>
-  </el-carousel>
+      <el-carousel-item v-for="item in imgList" :key="item">
+      <!-- <h3>{{ item }}</h3> -->
+      <h3><img :src="item" alt=""> </h3>
+      </el-carousel-item>
+      </el-carousel>
   </div>
 </template>
 <script>
@@ -12,7 +13,14 @@ export default {
     name:'Carousel',
     data(){
         return{
-
+          imgList:[
+            require('../../../static/images/test.png'),
+            require('../../../static/images/test2.png'),
+            require('../../../static/images/home1.jpg'),
+            require('../../../static/images/home4.jpg'),
+            require('../../../static/images/home5.jpg'),
+            require('../../../static/images/home6.jpg')
+          ],
         }
     }
 }

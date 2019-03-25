@@ -44,7 +44,7 @@ export default {
 .border{
     width: 95%;
     height: auto;
-    border: 2px solid blue;
+    border-radius: 10px;
     padding: 20px
 }
 li{
