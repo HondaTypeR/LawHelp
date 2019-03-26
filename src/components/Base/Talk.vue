@@ -70,7 +70,7 @@ export default {
         'ab-hot':Hot
     },
     created:function(){
-    this.$axios.get('/api/find/hotprofessor/'+JSON.parse( localStorage.getItem("cardid")))
+    this.$axios.get('/api/find/hotprofessor/'+JSON.parse( localStorage.getItem("temp"))+'/'+JSON.parse( localStorage.getItem("typeId")))
     .then((res)=>{
        console.log(res)
        this.name=res.data[0].name;
@@ -170,35 +170,35 @@ export default {
 .phone{
     position: absolute;
     top: 175px;
-    left: 455px;
+    left: 580px;
     width: 40px;
 }
 .phones{
     position: absolute;
     top: 175px;
-    left: 500px;
+    left: 620px;
 }
 .email{
     position: absolute;
     top: 229px;
-    left: 455px;
+    left: 580px;
     width: 37px;
 }
 .emails{
     position: absolute;
     top: 230px;
-    left: 500px;
+    left: 620px;
 }
 .address{
     position: absolute;
     top: 268px;
     width: 40px;
-    left: 456px;
+    left: 580px;
 }
 .addresss{
     position: absolute;
     top: 268px;
-    left: 500px;
+    left: 620px;
     width: 320px;
 }
 </style>

@@ -2,7 +2,7 @@
   <div>
       <el-container>
           <el-header>
-              <ab-header :phone="phone" :username="username" :total="total" :balance="balance" :role="role"></ab-header>
+              <ab-header></ab-header>
           </el-header>
           <el-main>
                      <div class="border">
@@ -40,11 +40,11 @@
                                         <img src="@/assets/role.jpg" class="thisimg">
                                          </el-col>
                                          <el-col :span="10">
-                                        <p class="thisUser">当前账号:{{this.phone}}</p>
-                                        <p class="thisUsername">欢迎您:{{this.username}}</p>
-                                        <p class="thisTotal">账户余额:{{this.total}}</p>
-                                         <p class="thisBalance">用户积分:{{this.balance}}</p>
-                                        <p class="thisUserRole">身份:{{this.role}}</p>
+                                        <p class="thisUser">当前账号:{{phone}}</p>
+                                        <p class="thisUsername">欢迎您:{{username}}</p>
+                                        <p class="thisTotal">账户余额:{{total}}</p>
+                                         <p class="thisBalance">用户积分:{{balance}}</p>
+                                        <p class="thisUserRole">身份:{{role}}</p>
                                          </el-col>
                                      </el-card>
                                 </el-row>
@@ -120,12 +120,12 @@ export default {
               { required: true,validator: validatePass2, trigger: 'blur' }
           ],
         },
-       dialogVisible: false,
-     phone:'',
-     username:'',
-     total:'',
-     balance:'',
-     role:'',
+      dialogVisible: false,
+      phone:'',
+      username:'',
+      total:'',
+      balance:'',
+      role:'',
      }
      },
     components:{

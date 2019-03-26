@@ -2,10 +2,11 @@
   <div>
       <ab-header></ab-header>
       <div class="form">
-          <div class="box-left">
+        <div class="back">
+              <h2 class="title">认证专家</h2>
+        </div>
+        <div class="box-left">
         <el-form :model="userinfo" status-icon :rules="rules2" ref="userinfo" label-width="100px" class="demo-ruleForm">
-            <span class="title">认证专家</span>
-        <el-button type="text" v-show="false" @click="submited()"></el-button>
         <el-form-item label="手机号" prop="phone">
             <el-input class="user" v-model.number="userinfo.phone" placeholder="注册的手机号将作为您的登陆手机号" maxlength="11"></el-input>
         </el-form-item>
@@ -15,16 +16,29 @@
         <el-form-item label="身份证号" prop="idcard">
             <el-input class="user" type="idcard" v-model="userinfo.idcard" autocomplete="off"></el-input>
         </el-form-item>
-       <el-form-item label="证件号" prop="assestid">
+         <el-form-item label="工作地址" prop="address">
+            <el-input class="user" type="address" v-model="userinfo.address" autocomplete="off"></el-input>
+        </el-form-item>
+         <el-form-item label="邮箱" prop="email">
+            <el-input class="user" type="email" v-model="userinfo.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="个人标签" prop="types" class="rightfive">
+            <el-select placeholder="请选择类型" v-model="userinfo.type" class="types">
+                       <el-option label="民事纠纷" value="1"></el-option>
+                       <el-option label="刑事纠纷" value="2"></el-option>
+                       <el-option label="生活琐事" value="3"></el-option>
+             </el-select>
+        </el-form-item>
+       <el-form-item label="证件号" prop="assestid" class="rightone">
             <el-input class="user" type="assestid" v-model="userinfo.assestid" autocomplete="off" placeholder="至少8位以上数字"></el-input>
         </el-form-item>
-        <el-form-item label="单位" prop="unit">
+        <el-form-item label="单位" prop="unit" class="righttwo">
             <el-input class="user" type="unit" v-model="userinfo.unit" autocomplete="off"></el-input>
         </el-form-item>
-         <el-form-item label="职称" prop="duty">
+         <el-form-item label="职称" prop="duty"  class="rightthree">
             <el-input class="user" type="duty" v-model="userinfo.duty" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="擅长" prop="goodat">
+        <el-form-item label="擅长" prop="goodat" class="rightfour">
             <el-input class="user" type="goodat" v-model="userinfo.goodat" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
@@ -33,9 +47,7 @@
         </el-form-item>
         </el-form>
         </div>
-        <div>
-              <img src="@/assets/logo.png">
-        </div>
+        
       </div>
       <ab-footer></ab-footer>
 </div>
@@ -44,7 +56,7 @@
 import Header from '@/components/Const/Header.vue'
 import Footer from '@/components/Const/Footer.vue'
 import Home from '@/components/Home.vue'
-import { error } from 'util';
+import { error, callbackify } from 'util';
   export default {
     name:'Regin',
     data() {
@@ -56,6 +68,7 @@ import { error } from 'util';
       var UNIT = /^[\u4e00-\u9fa5]{2,}$/;
       var DUTY = /^[\u4e00-\u9fa5]{2,}$/;
       var GOODAT =/^[\u4e00-\u9fa5]{2,}$/;
+      var EMAIL = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
       var checkPhone = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('手机号不能为空'));
@@ -109,11 +122,16 @@ import { error } from 'util';
       };
       var checkGoodat = (rule,value,callback)=>{
         if(!GOODAT.test(value)){
-          if(!GOODAT.test(value)){
              callback(new Error('输入格式有误'))
           }else{
           callback();
         }
+      };
+      var checkEmail = (rule,value,callback)=>{
+        if(!EMAIL.test(value)){
+          callback(new Error('邮箱格式有误'))
+        }else{
+          callback();
         }
       }
        return {
@@ -125,6 +143,9 @@ import { error } from 'util';
           unit:'',
           duty:'',
           goodat:'',
+          address:'',
+          email:'',
+          type:''
         },
         rules2: {
           name:[
@@ -147,6 +168,15 @@ import { error } from 'util';
           ],
           goodat:[
             {required:true,validator: checkGoodat, trigger: 'blur'}
+          ],
+          address:[
+            {required:true,trigger: 'blur'}
+          ],
+          email:[
+            {required:true,validator: checkEmail,trigger: 'blur'}
+          ],
+          types:[
+            {required:true,trigger: 'blur'}
           ]
         }
       };
@@ -155,11 +185,14 @@ import { error } from 'util';
       'home':Home
     },
     methods: {
+      
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
-             if (valid) {
+            //  if (valid) {
+               
       const axios =require('axios');
-      axios.get('/api/add/professor/'+this.userinfo.phone+'/'+this.userinfo.name+'/'+this.userinfo.idcard+'/'+this.userinfo.assestid+'/'+this.userinfo.unit+'/'+this.userinfo.duty+'/'+this.userinfo.goodat)
+      axios.get('/api/add/professor/'+this.userinfo.phone+'/'+this.userinfo.name+'/'+this.userinfo.idcard+'/'+this.userinfo.assestid+'/'+this.userinfo.unit+'/'+this.userinfo.duty+'/'+this.userinfo.goodat
+                 +'/'+this.userinfo.address+'/'+this.userinfo.email+'/'+this.userinfo.type)
       .then(function(response){
         console.log(response.data.success)
         console.log(response)
@@ -169,14 +202,14 @@ import { error } from 'util';
         }else{
           alert("该证件号已被验证，请确认")
         }
-      })
+      }.bind(this))
       .then(function(error){
         console.log(error)
       })
-       } else {
+      //  } else {
             console.log('error submit!!');
             return false;
-          }
+          // }
         });
       },
       resetForm(formName) {
@@ -240,9 +273,40 @@ import { error } from 'util';
     float: left;
 }
 .title{
-    font-size: 20px;
-    margin-left: 45px;
-    color: #6EB14A
+    font-size: 38px;
+    color: blue;
+    text-align: center
+}
+.back {
+    background-color: bisque;
+}
+.rightone{
+  position: absolute;
+  top: 373px;
+  left: 810px;
+}
+.righttwo{
+    position: absolute;
+    left: 810px;
+    top: 155px;
+}
+.rightthree{
+    position: absolute;
+    left: 810px;
+    top: 227px;
+}
+.rightfour{
+    position: absolute;
+    left: 810px;
+    top: 300px;
+}
+.rightfive{
+    position: absolute;
+    left: 810px;
+    top: 448px;
+}
+.types{
+    margin-top: 10px;
 }
 </style>
 <style>
