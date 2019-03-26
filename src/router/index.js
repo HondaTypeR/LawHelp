@@ -16,6 +16,8 @@ import MyQuestion from '@/components/Pages/MyQuestion'
 import NewsDetail from '@/components/Pages/NewsDetail'
 import Me from '@/components/Pages/Me'
 import OneToOne from '@/components/Pages/OneToOne'
+import Case from '@/components/Pages/Case'
+import CaseDetails from '@/components/Pages/CaseDetails'
 Vue.use(Router)
 
 export default new Router({
@@ -99,6 +101,16 @@ export default new Router({
       path: '/OneToOne',
       name: 'MOneToOnee',
       component: OneToOne
+    },
+    {
+      path: '/Case',
+      name: 'Case',
+      component: Case
+    },
+    {
+      path: '/CaseDetails',
+      name: 'CaseDetails',
+      component: CaseDetails
     },
   ]
 })

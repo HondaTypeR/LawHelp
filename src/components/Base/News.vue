@@ -45,7 +45,8 @@ export default {
     width: 95%;
     height: auto;
     border-radius: 10px;
-    padding: 20px
+    padding: 20px;
+    background-color: whitesmoke;
 }
 li{
     padding-bottom: 6px
