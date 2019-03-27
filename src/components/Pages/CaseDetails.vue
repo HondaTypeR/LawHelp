@@ -5,7 +5,7 @@
          <el-card class="border">
              <h1 class="title">{{title}}</h1>
              <p class="time">{{time}}</p>
-              <img src="@/assets/role3.jpg" class="img">
+              <img :src="imgs" class="img">
              <p class="details">{{details}}</p>
          </el-card>
         <ab-footer></ab-footer>

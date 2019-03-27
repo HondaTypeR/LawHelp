@@ -2,7 +2,7 @@
   <div>
       <div class="header">
             <img src="@/assets/questions.png" class="image">
-            <span class="title">亲，您来快速问医生，是想叫医生帮你解决什么呢？</span>
+            <span class="title">亲，欢迎来到法律帮问题讨论区，请发表自己的看法吧</span>
             <router-link to="/"> <el-button type="success" size="mini" style="margin-bottom:10px;margin-left:180px">首页</el-button></router-link>
       </div>
       <div>
@@ -54,7 +54,7 @@
                              </el-input>
                             <span slot="footer" class="dialog-footer">
                             <el-button @click="dialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="submitForm()">确 定</el-button>
+                            <el-button type="primary" plain @click="submitForm()">确 定</el-button>
                              </span>
                           </el-dialog>
                 <div v-for="item in professors">
@@ -71,7 +71,18 @@
                             <div class="rright grid-content bg-purple-dark">
                               <el-card shadow="hover">
                            <router-link to="/Talk"><span class="name">{{item.professorName}}</span></router-link>
-                             <router-link to="/OneToOne"> <el-button type="danger" class="money">付费咨询</el-button></router-link>
+                             <el-button type="danger" class="money" @click="dialogVisibles = true">付费咨询</el-button>
+                                      <el-dialog
+                                        title="付费咨询"
+                                        :visible.sync="dialogVisibles"
+                                        width="30%"
+                                        :before-close="handleClose">
+                                        <span>本次咨询将会在您的余额数量中扣除1</span>
+                                        <span slot="footer" class="dialog-footer">
+                                          <el-button @click="dialogVisibles = false">取 消</el-button>
+                                          <el-button type="primary" @click="goto">确 定</el-button>
+                                        </span>
+                                      </el-dialog>
                                     <span class="unit">{{item.professorUnit}}</span>
                                     <span class="duty">{{item.professorDuty}}</span>
                                     <p class="good">擅长:</p>
@@ -141,6 +152,8 @@
   export default {
     data() {
       return {
+        balance:'',
+        dialogVisibles: false,
         total:'',
         dialogVisible: false,
         textarea:'',
@@ -172,6 +185,11 @@
           }
         }).then((res)=>{
             this.textarea=''
+            this.$notify({
+          title: '回复成功',
+          message: '个人积分加1',
+          type: 'success'
+        });
         })
         }else{
           this.$axios({
@@ -183,7 +201,12 @@
             parentid:JSON.parse( localStorage.getItem("parentID")),
           }
         }).then((res)=>{
-            this.textarea=''
+          this.textarea=''
+          this.$notify({
+          title: '评论成功',
+          message: '个人积分加1',
+          type: 'success'
+        });
         })
         }
         this.total++;
@@ -233,6 +256,23 @@
           })
           .catch(_ => {});
       },
+      goto(){
+       this.$axios.get("/api/find/userinfos/"+JSON.parse( localStorage.getItem("data")))
+      .then((res)=>{
+       this.balance=res.data.result[0].balance;
+       var tem=res.data.result[0].balance;
+       if(tem<=0){
+         alert("您的余额不足，请充值")
+       }else{
+        this.balance=this.balance-1;
+        this.$axios.get('/api/update/balance/'+this.balance+'/'+JSON.parse( localStorage.getItem("data")))
+        this.$router.push({path:'/OneToOne'})
+        this.dialogVisibles=false;
+       }
+     })
+        
+
+      }
       
     },
      created:function(){

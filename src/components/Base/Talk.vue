@@ -29,12 +29,24 @@
             text-color="#ff9900"
             score-template="{value}">
             </el-rate>
+              <el-button type="success" class="money" @click="dialogVisibles = true">付费咨询</el-button>
+                                      <el-dialog
+                                        title="付费咨询"
+                                        :visible.sync="dialogVisibles"
+                                        width="30%"
+                                        :before-close="handleClose">
+                                        <span>本次咨询将会在您的余额数量中扣除1</span>
+                                        <span slot="footer" class="dialog-footer">
+                                          <el-button @click="dialogVisibles = false">取 消</el-button>
+                                          <el-button type="primary" @click="goto">确 定</el-button>
+                                        </span>
+                                      </el-dialog>
         </div>
         <div>
             <div class="none">
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane label="提问" name="first" class="one"><ab-talkOne></ab-talkOne></el-tab-pane>
-                    <el-tab-pane label="推荐" name="second"><ab-hot></ab-hot><ab-hot></ab-hot><ab-hot></ab-hot></el-tab-pane>
+                    <el-tab-pane label="推荐" name="second"><ab-proquestion></ab-proquestion></el-tab-pane>
                     <el-tab-pane label="关注" name="third"><ab-hot></ab-hot></el-tab-pane>
                 </el-tabs>
             </div>
@@ -47,10 +59,13 @@ import Header from '@/components/Const/Header.vue'
 import Footer from '@/components/Const/Footer.vue'
 import TalkOne from '@/components/Base/Talk-one.vue'
 import Hot from '@/components/Base/Hot.vue'
+import ProQuestion from '@/components/Base/ProQuestion.vue'
 export default {
     name:'Talk',
     data(){
         return {
+           balance:'',
+           dialogVisibles: false,
            activeName: 'second',
            name:'',
            unit:'',
@@ -67,7 +82,8 @@ export default {
         'ab-header':Header,
         'ab-footer':Footer,
         'ab-talkOne':TalkOne,
-        'ab-hot':Hot
+        'ab-hot':Hot,
+        'ab-proquestion':ProQuestion,
     },
     created:function(){
     this.$axios.get('/api/find/hotprofessor/'+JSON.parse( localStorage.getItem("temp"))+'/'+JSON.parse( localStorage.getItem("typeId")))
@@ -85,6 +101,25 @@ export default {
        
     })
   },
+  methods:{
+      goto(){
+       this.$axios.get("/api/find/userinfos/"+JSON.parse( localStorage.getItem("data")))
+      .then((res)=>{
+       this.balance=res.data.result[0].balance;
+       var tem=res.data.result[0].balance;
+       if(tem<=0){
+         alert("您的余额不足，请充值")
+       }else{
+        this.balance=this.balance-1;
+        this.$axios.get('/api/update/balance/'+this.balance+'/'+JSON.parse( localStorage.getItem("data")))
+        this.$router.push({path:'/OneToOne'})
+        this.dialogVisibles=false;
+       }
+     })
+        
+
+      }
+  }
     
 }
 </script>
@@ -200,6 +235,11 @@ export default {
     top: 268px;
     left: 620px;
     width: 320px;
+}
+.money{
+    position: absolute;
+    left: 430px;
+    top: 39px;
 }
 </style>
 <style>

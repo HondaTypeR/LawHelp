@@ -8,7 +8,7 @@
         <span>法学专家</span>
         <div class="bottom clearfix">
           <span>这位是专业的律师</span>
-          <el-button type="text" class="button">点击交流</el-button>
+          <el-button type="text" class="button">点击查看</el-button>
         </div>
       </div>
     </el-card>

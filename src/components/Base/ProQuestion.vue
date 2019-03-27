@@ -121,7 +121,7 @@ export default {
        this.goodat=res.data[0].goodat;
      })
     
-      this.$axios.get("/api/find/questions/")
+      this.$axios.get("/api/find/hotquestion/36")
       .then((res)=>{
         var respon =res.data;
         this.messages=respon

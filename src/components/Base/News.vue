@@ -10,7 +10,11 @@
   </el-tabs>
   </div>
   <div class="box-right">
-  待加载数据
+  <h3 class="addtitle">充值中心</h3>
+   <span class="money">充值金额:</span>
+   <el-input-number v-model="num3" :step="1" :min="1"></el-input-number>
+      <el-button type="primary" @click="addmoney">确认充值</el-button>
+   <img class="moneyimg" src="@/assets/money.jpg">
   </div>
   </div>
 </template>
@@ -19,7 +23,8 @@ export default {
     name:'News',
     data(){
         return{
-            news:[]
+            news:[],
+            num3: 5
         }
     },
     created: function(){
@@ -34,7 +39,16 @@ export default {
          getIndex(index){   
              console.log(index)    
             localStorage.setItem('newsID',JSON.stringify(index))
-          
+      },
+      addmoney(){
+          this.$axios.get('/api/update/balance/'+this.num3+'/'+JSON.parse( localStorage.getItem("data")))
+          .then((res)=>{
+          this.$notify({
+          title: '充值成功',
+          message: '请刷新您的账户余额',
+          type: 'success'
+        });
+          })
       }
     }
 }
@@ -58,8 +72,21 @@ li{
 .box-right{
     float: right;
     width: 29%;
-    border: 1px solid gainsboro;
-    height: 300px;
- 
+    height: 349px;
+    margin-top: 38px;
+    background-color: aliceblue;
+}
+.addtitle{
+    text-align: center
+}
+.money{
+    margin-left: 40px
+}
+.moneyimg{
+    height: 213px;
+    width: 326px;
+    margin-top: 20px;
+    margin-left: 50px;
+
 }
 </style>

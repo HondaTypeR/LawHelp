@@ -7,14 +7,15 @@ CLOSED (3)：连接已经关闭或无法打开； -->
   <div class="talkbox">
        <el-card class="box-card header">
             <span>{{status}}</span>
-            <el-button type="danger" class="close"  @click="closeWebSocket()">关闭对话</el-button>
+            <el-button type="danger" class="close"  @click="closeWebSocket()" v-show="close">关闭对话</el-button>
+            <router-link to="/"> <el-button type="success" size="mini" class="backHome" v-show="backHome">回首页</el-button></router-link>
        </el-card>
      <el-card class="box-card talk">
     <div class="border">
     <!-- <div v-html="data"></div> -->
     <!-- <div class="tt">{{data}}</div> -->
-    <div v-for="item in messages">
-     <div class="messages">-{{item}}--{{time}}</div>
+    <div v-for="item in messages ">
+     <div class="messages">-{{item}}</div>
     </div>
     </div>
      </el-card>
@@ -37,9 +38,10 @@ export default {
   },
   data() {
     return {
+      close:true,
+      backHome:false,
       text: '',
       data: [],
-      time:'',
       messages:[],
       status:'',
       websocket: null
@@ -82,7 +84,7 @@ export default {
     },
     setOnmessageMessage(event) {
       var user=JSON.parse( localStorage.getItem("name"))
-       var now = new Date();
+      var now = new Date();
       now.getTime()
       var year = now.getFullYear();
       var month = now.getMonth()+1;
@@ -104,11 +106,9 @@ export default {
       clock+=mm +":";
       if(ss<10) clock +='0';
       clock+=ss;
-      this.time=clock;
-    
-      // this.data+= user+':' + event.data;
-      this.messages.push(user+':'+ event.data)
-      console.log(this.messages)
+      this.messages.push(user+':'+ event.data+'---'+clock)
+      console.log( this.messages)
+     
     },
     setOncloseMessage() {
       this.status = "本次通话结束" + '   状态码：' + this.websocket.readyState;
@@ -123,7 +123,9 @@ export default {
       this.text = ''
     },
     closeWebSocket() {
-      this.websocket.close()
+      this.websocket.close();
+      this.backHome=true;
+      this.close=false
     }
   }
 }
@@ -166,5 +168,8 @@ export default {
     background-color: whitesmoke;
     text-indent: 1em;
     margin-bottom: 10px;
+}
+.backHome{
+  margin-left: 190px;
 }
 </style>

@@ -1,12 +1,23 @@
 <template>
         <div>
-            <el-card class="border">
-                <h1>{{title}} </h1>
-                <p class="details"> {{details | ellipsis}}</p>
+            <el-card class="border" v-for="(item ,index) in caseList" :key="item.id">
+              <router-link to="/CaseDetails"><h1 @click="getCaseId(item.id)">{{item.title}} </h1></router-link>
+                <p class="details"> {{item.detailes | ellipsis}}</p>
             </el-card>
+            <!-- <el-button type="primary" @click="up()">上一页</el-button>
+            <el-button type="primary">下一页</el-button> -->
+           <el-pagination class="pages"
+           background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage1"
+            :page-sizes="[5, 10, 30, 40]"
+            :page-size="pageSize"
+            layout=" prev, pager, next, sizes, total"
+            :total="total">
+            </el-pagination>
         </div>
 </template>
-
 <script>
 export default {
     filters:{
@@ -20,9 +31,44 @@ export default {
     },
     data(){
         return{
-            title:'[.黑社会] 微信建群开赌场 聊天记录露马脚',
-            details:"日前，湖北省钟祥市检察院侦查监督部在办理一起开设赌场案中，通过提取涉案手机电子信息，挖出了8名漏犯。2018年10月15日，公安机关以杨某涉嫌通过微信建群的方式开设赌日前，湖北省钟祥市检察院侦查监督部在办理一起开设赌场案中，通过提取涉案手机电子信息，挖出了8名漏犯。2018年10月15日，公安机关以杨某涉嫌通过微信建群的方式开设赌日前，湖北省钟祥市检察院侦查监督部在办理一起开设赌场案中，通过提取涉案手机电子信息，挖出了8名漏犯。2018年10月15日，公安机关以杨某涉嫌通过微信建群的方式开设赌"  　
+            currentPage1: 1,
+            total: '',
+            page: 1,
+            pageSize: 5,
+            pageNum:1,
+            caseList:[],
+            title:'',
+            detailes:""  　
         }
+    },
+     created(){
+        this.handleCaseList()
+    },
+     methods:{
+        getCaseId(id){
+        localStorage.setItem('caseId',JSON.stringify(id));
+        },
+        up(){
+            this.currentPage=this.currentPage+1;
+            // console.log(this.currentPage)
+        },
+        handleCaseList() {
+           this.$axios.get('/api/find/allcase/'+3+'/'+this.pageNum+'/'+this.pageSize)
+            .then((res)=>{
+                this.caseList=res.data
+                this.total=res.data.length
+                console.log(res)
+            })
+        },
+        handleSizeChange(val) {
+                this.pageSize = val;
+                this.handleCaseList();
+            },
+            //条目改变时
+            handleCurrentChange(val) {
+                this.pageNum = val;
+                this.handleCaseList();
+            },
     },
 }
 </script>
@@ -31,5 +77,9 @@ export default {
 .border{
     margin: auto;
     width: 1000px;
+}
+.pages{
+    text-align: center;
+    margin-top: 10px
 }
 </style>

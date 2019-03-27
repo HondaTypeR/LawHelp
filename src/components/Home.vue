@@ -42,8 +42,8 @@
                                          <el-col :span="10">
                                         <p class="thisUser">当前账号:{{phone}}</p>
                                         <p class="thisUsername">欢迎您:{{username}}</p>
-                                        <p class="thisTotal">账户余额:{{total}}</p>
-                                         <p class="thisBalance">用户积分:{{balance}}</p>
+                                        <p class="thisTotal">账户余额:{{balance}}</p>
+                                         <p class="thisBalance">用户积分:{{total}}</p>
                                         <p class="thisUserRole">身份:{{role}}</p>
                                          </el-col>
                                      </el-card>

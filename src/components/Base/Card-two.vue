@@ -11,7 +11,7 @@
           <el-tag type="success">  <span>{{item.unit}}</span></el-tag>
           <el-tag type="success">   <span>{{item.duty}}</span></el-tag>
           <el-tag type="success"><span>{{item.goodat}}</span></el-tag>
-          <router-link to="/Talk"> <el-button type="text" class="button" @click="getDetails(item.phone)">点击交流</el-button></router-link>
+          <router-link to="/Talk"> <el-button type="text" class="button" @click="getDetails(item.phone)">点击查看</el-button></router-link>
         </div>
       </div>
     </el-card>
