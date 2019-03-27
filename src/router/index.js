@@ -18,6 +18,7 @@ import Me from '@/components/Pages/Me'
 import OneToOne from '@/components/Pages/OneToOne'
 import Case from '@/components/Pages/Case'
 import CaseDetails from '@/components/Pages/CaseDetails'
+import SuperAdmin from '@/components/Pages/SuperAdmin'
 Vue.use(Router)
 
 export default new Router({
@@ -111,6 +112,11 @@ export default new Router({
       path: '/CaseDetails',
       name: 'CaseDetails',
       component: CaseDetails
+    },
+    {
+      path: '/SuperAdmin',
+      name: 'SuperAdmin',
+      component: SuperAdmin
     },
   ]
 })
