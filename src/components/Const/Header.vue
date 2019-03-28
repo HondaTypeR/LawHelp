@@ -5,7 +5,7 @@
          <router-link to="/Ask"><span>免费提问</span></router-link>
          <ul class="box">
              <li>法律援助</li>
-             <li>今日说法</li>
+            <router-link to="/Step"> <li>我的待办</li></router-link>
              <router-link to="/Case"><li>经典案例</li></router-link>
             <router-link to="/Professor"> <li>认证专家</li></router-link>
             <router-link to="/TalkAbout"> <li>沟通交流</li></router-link>   

@@ -22,6 +22,7 @@ import SuperAdmin from '@/components/Pages/SuperAdmin'
 import SuperAddProfess from '@/components/Pages/SuperAddProfess'
 import Pass from '@/components/Pages/Pass'
 import NotPass from '@/components/Pages/NotPass'
+import Step from '@/components/Pages/Step'
 Vue.use(Router)
 
 export default new Router({
@@ -135,6 +136,11 @@ export default new Router({
       path: '/NotPass',
       name: 'NotPass',
       component: NotPass
+    },
+    {
+      path: '/Step',
+      name: 'Step',
+      component: Step
     },
   ]
 })
