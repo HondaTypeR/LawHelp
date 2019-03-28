@@ -19,6 +19,9 @@ import OneToOne from '@/components/Pages/OneToOne'
 import Case from '@/components/Pages/Case'
 import CaseDetails from '@/components/Pages/CaseDetails'
 import SuperAdmin from '@/components/Pages/SuperAdmin'
+import SuperAddProfess from '@/components/Pages/SuperAddProfess'
+import Pass from '@/components/Pages/Pass'
+import NotPass from '@/components/Pages/NotPass'
 Vue.use(Router)
 
 export default new Router({
@@ -117,6 +120,21 @@ export default new Router({
       path: '/SuperAdmin',
       name: 'SuperAdmin',
       component: SuperAdmin
+    },
+    {
+      path: '/SuperAddProfess',
+      name: 'SuperAddProfess',
+      component: SuperAddProfess
+    },
+    {
+      path: '/Pass',
+      name: 'Pass',
+      component: Pass
+    },
+    {
+      path: '/NotPass',
+      name: 'NotPass',
+      component: NotPass
     },
   ]
 })

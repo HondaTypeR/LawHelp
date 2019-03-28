@@ -11,10 +11,10 @@
                     <el-row>
                         <el-col :span="4">
                             <div class="grid-content bg-purple left">
-                                 <el-button class="buttons">添加新闻</el-button>
-                                 <el-button class="buttons">认证专家</el-button>
-                                 <el-button class="buttons">主要按钮</el-button>
-                                 <el-button class="buttons">主要按钮</el-button>
+                                  <router-link to="/SuperAdmin"> <el-button class="buttons">添加新闻</el-button></router-link>
+                                 <router-link to="/SuperAddProfess"><el-button class="buttons">认证中心</el-button></router-link>
+                                 <router-link to="/Pass"><el-button class="buttons">验证专家</el-button></router-link>
+                                 <router-link to="/NotPass"><el-button class="buttons">驳回专家</el-button></router-link>
                             </div>
                         </el-col>
                         <el-col :span="20">
@@ -153,7 +153,6 @@ export default {
     border: 5px solid yellow;
     min-height: 500px;
     height: auto;
-    max-height: 800px;
 }
 .NewsTitle{
     text-align: center
