@@ -1,4 +1,5 @@
 <!-- readyState表示连接有四种状态：
+import func from './vue-temp/vue-editor-bridge';
 CONNECTING (0)：表示还没建立连接；
 OPEN (1)： 已经建立连接，可以进行通讯；
 CLOSING (2)：通过关闭握手，正在关闭连接；
@@ -40,21 +41,28 @@ export default {
     return {
       close:true,
       backHome:false,
-      text: '',
+      text:'',
+      mess:'',
       data: [],
       messages:[],
       status:'',
-      websocket: null
+      websocket: null,
+      uu:''
     }
   },
   mounted() {
     debugger
     if ('WebSocket' in window) {
-      this.websocket = new WebSocket('ws://localhost:8080/websocket');
+      this.websocket = new WebSocket('ws://39.107.75.95:8080/websocket');
       this.initWebSocket()
     } else {
       alert('当前浏览器 Not support websocket')
     }
+  },
+  created:function(){
+   var user=JSON.parse( localStorage.getItem("name"))
+   this.uu=user;
+   console.log(this.uu)
   },
   beforeDestroy() {
     this.onbeforeunload()
@@ -83,7 +91,6 @@ export default {
       this.status = "建立连接，可以进行通讯" + '   状态码：' + this.websocket.readyState;
     },
     setOnmessageMessage(event) {
-      var user=JSON.parse( localStorage.getItem("name"))
       var now = new Date();
       now.getTime()
       var year = now.getFullYear();
@@ -106,7 +113,7 @@ export default {
       clock+=mm +":";
       if(ss<10) clock +='0';
       clock+=ss;
-      this.messages.push(user+':'+ event.data+'---'+clock)
+      this.messages.push(event.data+'---'+clock)
       console.log( this.messages)
      
     },
@@ -119,8 +126,9 @@ export default {
  
     //websocket发送消息
     send() {
-      this.websocket.send(this.text)
-      this.text = ''
+      this.mess=this.uu+':'+this.text
+      this.websocket.send(this.mess)
+      this.text=''
     },
     closeWebSocket() {
       this.websocket.close();

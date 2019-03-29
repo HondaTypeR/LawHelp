@@ -71,7 +71,7 @@
                             <div class="rright grid-content bg-purple-dark">
                               <el-card shadow="hover">
                            <router-link to="/Talk"><span class="name">{{item.professorName}}</span></router-link>
-                             <el-button type="danger" class="money" @click="dialogVisibles = true">付费咨询</el-button>
+                             <el-button type="danger" class="money" @click="choose()">付费咨询</el-button>
                                       <el-dialog
                                         title="付费咨询"
                                         :visible.sync="dialogVisibles"
@@ -166,6 +166,15 @@
     methods: {
       isOpen(){
         this.dialogVisible=true;
+      },
+      choose(){
+        var roless = JSON.parse( localStorage.getItem("role"))
+        if(roless==1){
+          this.$router.push({path:'/OneToOne'})
+          this.dialogVisibles=false;
+        }else{
+          this.dialogVisibles=true;
+        }
       },
       submitForm(){
         debugger

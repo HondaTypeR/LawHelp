@@ -11,11 +11,17 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api':{
-        target: 'http://localhost:8080',
+      // '/api':{
+      //   target: 'http://localhost:8080',
+      //   changeOrigin: true,
+      //   pathRewrite:{
+      //     '^/api':''
+      //   }
+       '/api/*':{
+        target: 'http://39.107.75.95:8080',
         changeOrigin: true,
         pathRewrite:{
-          '^/api':''
+          '/api':'/'
         }
       }
     },
@@ -58,13 +64,13 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
