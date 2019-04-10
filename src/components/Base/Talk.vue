@@ -5,7 +5,7 @@
             <img src="@/assets/beijing.jpg" class="img">
         </div>
         <div class="float">
-            <img src="@/assets/role.jpg" style="border-radius:60px">
+            <img :src="imgName" class="muchimg">
             <span class="name">{{name}}</span>
             <span class="post">{{duty}}</span>
             <span class="unit">{{unit}}</span>
@@ -64,6 +64,7 @@ export default {
     name:'Talk',
     data(){
         return {
+           imgName:'',
            balance:'',
            dialogVisibles: false,
            activeName: 'second',
@@ -76,6 +77,7 @@ export default {
            address:'',
            email:'',
            phone:'',
+           temp:''
       };
     },
     components:{
@@ -85,10 +87,11 @@ export default {
         'ab-hot':Hot,
         'ab-proquestion':ProQuestion,
     },
-    created:function(){
+    beforeCreate:function(){
     this.$axios.get('/api/find/hotprofessor/'+JSON.parse( localStorage.getItem("temp"))+'/'+JSON.parse( localStorage.getItem("typeId")))
     .then((res)=>{
        console.log(res)
+       debugger
        this.name=res.data[0].name;
        this.duty=res.data[0].duty;
        this.unit=res.data[0].unit;
@@ -98,6 +101,14 @@ export default {
        this.address=res.data[0].address;
        this.email=res.data[0].email;
        this.phone=res.data[0].phone;
+       var xx=res.data[0].phone;
+       this.temp=xx
+        this.$axios.get('/api/find/imgpath/'+this.temp)
+       .then((res)=>{
+        var x = 'http://39.107.75.95:8080/fileoo/'
+        this.imgName=x+res.data[0].fileName
+        console.log(this.imgName)
+      })
        
     })
   },
@@ -166,6 +177,7 @@ export default {
     top: 174px;
     left: 138px;
     font-size: 17px;
+    width: 65px;
 }
 .gmsg{
     width: 1025px;
@@ -178,6 +190,7 @@ export default {
     position: absolute;
     left: 138px;
     top: 229px;
+    width: 50px;
 }
 .amsg{
     position: absolute;
@@ -201,6 +214,7 @@ export default {
     position: absolute;
     left: 138px;
     top: 269px;
+    width: 50px;
 }
 .phone{
     position: absolute;
@@ -240,6 +254,12 @@ export default {
     position: absolute;
     left: 430px;
     top: 39px;
+}
+.muchimg{
+    width: 130px;
+    border-radius: 16px;
+    position: absolute;
+    left: 100px;
 }
 </style>
 <style>

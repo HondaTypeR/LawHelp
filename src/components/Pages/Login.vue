@@ -104,15 +104,12 @@ import SIdentify from '@/components/Base/Identify.vue'
     },
     methods: {
       submitForm(formName) {
-          const h = this.$createElement;
-
-        this.$notify({
-          title: '系统提示',
-          message: h('i', { style: 'color: teal'}, '登陆成功，请自觉遵守本站条例')
-        });
+         this.$refs[formName].validate((valid) => {
+       if (valid) {
+        const h = this.$createElement;
         const self = this;
         const axios =require('axios');
-      axios.get('/api/find/user/'+this.userinfo.phone+'/'+this.userinfo.pass)
+       axios.get('/api/find/user/'+this.userinfo.phone+'/'+this.userinfo.pass)
       .then(function(response){
         var nphone=response.data.result[0].phone;
         var nusername=response.data.result[0].username;
@@ -126,7 +123,6 @@ import SIdentify from '@/components/Base/Identify.vue'
         localStorage.setItem('total',JSON.stringify(response.data.result[0].total))
         var flag = response.data.success;
         if(flag==true){
-         
           self.$router.push({path:"/",query:{p:nphone,u:nusername,t:ntotal,b:nbalance,r:nrole}});
         }else{
           alert("登陆失败")
@@ -136,7 +132,13 @@ import SIdentify from '@/components/Base/Identify.vue'
       .then(function(error){
         console.log(error)
       })
+      } else {
+            alert("登陆失败，请重试")
+            return false;
+          }
+       });
       },
+
       randomNum(min, max) {
       return Math.floor(Math.random() * (max - min) + min);
     },

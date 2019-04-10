@@ -26,6 +26,7 @@ export default {
     data() {
     return {
     infos:[],
+    phone:[]
     };
   },
   created:function(){
@@ -33,7 +34,18 @@ export default {
     .then((res)=>{
       this.infos=res.data
        console.log(this.infos)
+       for(var i=0;i<res.data.length;i++){
+         this.phone.push(res.data[i].phone)
+       }
+       console.log(this.phone)
     })
+
+    this.$axios.get('/api/find/imgpath/'+JSON.parse( localStorage.getItem("data")))
+      .then((res)=>{
+        var x = 'http://39.107.75.95:8080/fileoo/'
+        this.imgName=x+res.data[0].fileName
+        console.log(this.imgName)
+      })
   },
   methods:{
     getDetails(phone){

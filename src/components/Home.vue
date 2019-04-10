@@ -4,12 +4,12 @@
           <el-header>
               <ab-header></ab-header>
           </el-header>
-          <el-main>
-                     <div class="border">
+          <el-main>         
                             <div class="logo">
                                 <img src="@/assets/logo.png">
                             </div>
                             <div class="box">
+                               <div class="border">
                                 <el-row :gutter="22">
                                    <el-card shadow="hover">
                                        <i class="el-icon-setting" @click="dialogVisible = true"></i>
@@ -37,7 +37,10 @@
                                         </el-dialog>
                                        <router-link to="/Login"><i class="el-icon-circle-close" @click="clearLocalStrorage()"></i></router-link>
                                         <el-col :span="12">
-                                        <img src="@/assets/role.jpg" class="thisimg">
+                                        <!-- <img src="@/assets/role.jpg" class="thisimg"> -->
+                                        <div class="addimg">
+                                             <img :src="imgName" class="thisimg">
+                                        </div>
                                          </el-col>
                                          <el-col :span="10">
                                         <p class="thisUser">当前账号:{{phone}}</p>
@@ -126,6 +129,8 @@ export default {
       total:'',
       balance:'',
       role:'',
+      imgName:'',
+      flag:''
      }
      },
     components:{
@@ -155,8 +160,30 @@ export default {
        }else{
          this.role='用户'
        }
-
      })
+     this.$axios.get('/api/find/imgpath/'+JSON.parse( localStorage.getItem("data")))
+      .then((res)=>{
+        var x = 'http://39.107.75.95:8080/fileoo/'
+        this.imgName=x+res.data[0].fileName
+        console.log(this.imgName)
+      })
+      this.$axios({
+        method:'post',
+        url:'/api/find/flag',
+        data:{
+          username:JSON.parse(localStorage.getItem("name"))
+        }
+      }).then((res)=>{
+        this.flag=res.data
+        console.log(this.flag)
+        if(this.flag==1){
+          this.$notify.info({
+          title: '系统提示',
+          message: '您有新的付费咨询，请注意查看',
+          duration: 0
+        });
+        }
+      })
   },
    methods: {
       submitForm(formName) {
@@ -201,7 +228,13 @@ export default {
       },
       clearLocalStrorage(){
         localStorage.clear();
-      }
+      },
+       open5() {
+        this.$notify.info({
+          title: '消息',
+          message: '这是一条消息的提示消息'
+        });
+      },
    }
 }
 </script>
@@ -229,6 +262,8 @@ img.thisimg {
     border-radius: 35px;
     padding: 3px;
     margin-top: 15px;
+    width: 229px;
+    height: 150px;
 }
 .thiserach{
    margin: 10px

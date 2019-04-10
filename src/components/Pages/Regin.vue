@@ -17,6 +17,12 @@
         <el-form-item label="确认密码" prop="checkPass">
             <el-input class="logininput"  type="password" v-model="userinfo.checkPass" autocomplete="off" show-password  maxlength="20"  minlength="6" placeholder="最大支持20个字符"></el-input>   
         </el-form-item>
+        <el-form-item label="选择头像:">
+             <form>
+              <input type="file" @change="getFile($event)" class="upload">
+              <button class="button button-primary button-pill button-small" @click="submit($event)">提交</button>
+            </form>
+        </el-form-item>
         <el-form-item label="验证码"  prop="identify">
             <el-input class="identify" v-model.number="userinfo.identify" placeholder="请输入验证码" maxlength="4"></el-input>
             <div class="code" @click="refreshCode">
@@ -98,15 +104,16 @@ import SIdentify from '@/components/Base/Identify.vue'
         }
       };
        return {
+           file: '',
            identifyCodes: "1234567890",
            identifyCode: "",
-          note: {
-          backgroundImage: "url(" + require("@/assets/bei.jpg") + ")",
-          backgroundRepeat: "repeat",
-          backgroundSize: "cover",
-          marginTop: "5px",
-          height:"810px"
-          },
+            note: {
+            backgroundImage: "url(" + require("@/assets/bei.jpg") + ")",
+            backgroundRepeat: "repeat",
+            backgroundSize: "cover",
+            marginTop: "5px",
+            height:"810px"
+            },
           rules: {
               phone: [
                 {required: true, validator: checkPhone, trigger: 'blur' }
@@ -161,7 +168,7 @@ import SIdentify from '@/components/Base/Identify.vue'
         console.log(error)
       })
        } else {
-            console.log('error submit!!');
+            alert("注册失败，请重试")
             return false;
           }
        });
@@ -185,6 +192,26 @@ import SIdentify from '@/components/Base/Identify.vue'
      resetForm(formName) {
         this.$refs[formName].resetFields();
       },
+      getFile: function (event) {
+        this.file = event.target.files[0];
+        console.log(this.file);
+      },
+      submit: function (event) {
+        //阻止元素发生默认的行为
+        event.preventDefault();
+        let formData = new FormData();
+        formData.append("file", this.file);
+        formData.append("phone", this.userinfo.phone);
+        this.$axios.post('http://39.107.75.95:8080/upload/singlefile', formData)
+          .then(function (response) {
+            alert(response.data);
+            console.log(response);
+          })
+          .catch(function (error) {
+            alert("上传失败");
+            console.log(error);
+          });
+      }
     },
      mounted() {
     this.identifyCode = "";
@@ -203,7 +230,7 @@ import SIdentify from '@/components/Base/Identify.vue'
 }
 .form{
     width: 460px;
-    height: 600px;
+    height: 713px;
     margin-left: 500px;
     background-color: whitesmoke;
 }
@@ -245,6 +272,10 @@ import SIdentify from '@/components/Base/Identify.vue'
 }
 .reset{
   width: 100px
+}
+.upload{
+      margin-top: 19px;
+
 }
 </style>
 <style>

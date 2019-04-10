@@ -57,7 +57,7 @@
                             <el-button type="primary" plain @click="submitForm()">确 定</el-button>
                              </span>
                           </el-dialog>
-                <div v-for="item in professors">
+                <div v-for="item in professors" :key="item.professorName">
                      <el-row>
                           <h3 style="padding-left:20px" class="linetext">专家回复</h3>
                         <el-col :span="5">
@@ -71,7 +71,7 @@
                             <div class="rright grid-content bg-purple-dark">
                               <el-card shadow="hover">
                            <router-link to="/Talk"><span class="name">{{item.professorName}}</span></router-link>
-                             <el-button type="danger" class="money" @click="choose()">付费咨询</el-button>
+                             <el-button type="danger" class="money" @click="choose(item.professorName)">付费咨询</el-button>
                                       <el-dialog
                                         title="付费咨询"
                                         :visible.sync="dialogVisibles"
@@ -167,7 +167,17 @@
       isOpen(){
         this.dialogVisible=true;
       },
-      choose(){
+      choose(temp){
+        this.$axios({
+          method:'post',
+          url:'/api/update/flag',
+          data:{
+            username:temp,
+            flag:1    
+          }
+        }).then((res)=>{
+          console.log(res)
+        })
         var roless = JSON.parse( localStorage.getItem("role"))
         if(roless==1){
           this.$router.push({path:'/OneToOne'})
@@ -288,14 +298,11 @@
        var total = localStorage.getItem("total");
        var phone = localStorage.getItem("data");
        this.total=total
-       console.log(this.total)
-       console.log(phone)
        var flag=JSON.parse( localStorage.getItem("data"));
       this.$axios.get("/api/find/questionsr/"+JSON.parse( localStorage.getItem("parentID")))
       .then((res)=>{
         var respon =res.data;
         this.messages=respon
-        console.log(this.messages)
       })
 
         this.$axios.get("/api/find/professorRes/"+JSON.parse( localStorage.getItem("parentID")))
@@ -309,7 +316,6 @@
      .then((res)=>{
        var peopleRespon = res.data
        this.peoplemes =peopleRespon
-       console.log(res.data)
      })
     
 

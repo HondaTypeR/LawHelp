@@ -104,7 +104,7 @@ export default new Router({
     },
     {
       path: '/OneToOne',
-      name: 'MOneToOnee',
+      name: 'OneToOnee',
       component: OneToOne
     },
     {
