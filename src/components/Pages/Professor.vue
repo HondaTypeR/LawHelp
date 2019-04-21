@@ -22,7 +22,7 @@
          <el-form-item label="邮箱" prop="email">
             <el-input class="user" type="email" v-model="userinfo.email" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="个人标签" prop="types" class="rightfive">
+        <el-form-item label="个人标签" prop="type" class="rightfive">
             <el-select placeholder="请选择类型" v-model="userinfo.type" class="types">
                        <el-option label="民事纠纷" value="1"></el-option>
                        <el-option label="刑事纠纷" value="2"></el-option>
@@ -47,7 +47,7 @@
         </el-form-item>
         </el-form>
         </div>
-        
+          <button @click="show()">show</button>
       </div>
       <ab-footer></ab-footer>
 </div>
@@ -175,7 +175,7 @@ import { error, callbackify } from 'util';
           email:[
             {required:true,validator: checkEmail,trigger: 'blur'}
           ],
-          types:[
+          type:[
             {required:true,trigger: 'blur'}
           ]
         }
@@ -185,14 +185,32 @@ import { error, callbackify } from 'util';
       'home':Home
     },
     methods: {
-      
+      show(){
+      console.log(this.userinfo.type)
+    },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
-            //  if (valid) {
-               
+             if (valid) {  
       const axios =require('axios');
-      axios.get('/api/add/professor/'+this.userinfo.phone+'/'+this.userinfo.name+'/'+this.userinfo.idcard+'/'+this.userinfo.assestid+'/'+this.userinfo.unit+'/'+this.userinfo.duty+'/'+this.userinfo.goodat
-                 +'/'+this.userinfo.address+'/'+this.userinfo.email+'/'+this.userinfo.type)
+      axios({
+        method:'post',
+        url:'/api/add/newprofessors',
+        data:{
+          phone:this.userinfo.phone,
+          name:this.userinfo.name,
+          idcard:this.userinfo.idcard,
+          assestid:this.userinfo.assestid,
+          unit:this.userinfo.unit,
+          duty:this.userinfo.duty,
+          goodat:this.userinfo.goodat,
+          address:this.userinfo.address,
+          email:this.userinfo.email,
+          active:'Y',
+          isshow:'Y',
+          asked:this.userinfo.type,
+          parentId:this.userinfo.parentId
+        }
+      })
       .then(function(response){
         console.log(response.data.success)
         console.log(response)
@@ -206,10 +224,10 @@ import { error, callbackify } from 'util';
       .then(function(error){
         console.log(error)
       })
-      //  } else {
+       } else {
             console.log('error submit!!');
             return false;
-          // }
+          }
         });
       },
       resetForm(formName) {

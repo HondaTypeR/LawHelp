@@ -9,7 +9,7 @@
                         <div v-for="(item,index) in messages" :key="item.id">
                           <el-card shadow="hover" class="cardbox">
                             <router-link :to="{name:'BBC',params:{ID:questionId}}"> <h2 @click="getIndex(item.id)">{{item.title}}</h2></router-link>
-                             <p>{{item.details}}</p>
+                            <p>{{item.details}}</p>
                             <el-badge :value="200" :max="99" class="item">
                             <el-button size="small" >评论</el-button>
                             </el-badge>
