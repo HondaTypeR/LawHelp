@@ -11,7 +11,7 @@
                     <el-row>
                         <el-col :span="4">
                             <div class="grid-content bg-purple left">
-                                 <router-link to="/SuperAdmin"> <el-button class="buttons">添加新闻</el-button></router-link>
+                                  <router-link to="/SuperAdmin"> <el-button class="buttons">添加新闻</el-button></router-link>
                                  <router-link to="/SuperAddProfess"><el-button class="buttons">认证中心</el-button></router-link>
                                  <router-link to="/Pass"><el-button class="buttons">验证专家</el-button></router-link>
                                  <router-link to="/NotPass"><el-button class="buttons">驳回专家</el-button></router-link>
@@ -21,16 +21,13 @@
                         </el-col>
                         <el-col :span="20">
                             <div class="grid-content bg-purple-light right">
-                                <h1 class="NewsTitle">认证专家管理</h1>
-                                    <div class="askform"  v-for="(item,index) in msgs">
+                                <h1 class="NewsTitle">封禁留言</h1>
+                                    <div class="askform"  v-for="(item,index) in resdata" :key="item.peopleName">
                                        <el-card class="msgcard">
                                            <div>
-                                            <span class="borders">姓名：{{item.name}}</span>
-                                            <span class="borders">身份证：{{item.idcard}}</span>
-                                            <span class="borders">证件号:{{item.assestid}}</span>
-                                            <span class="borders">电话:{{item.phone}}</span>
-                                            <span class="borders">邮箱:{{item.email}}</span>
-                                            <p class="borders">地址:{{item.address}}</p>
+                                            <el-tag type="danger" class="tags"><span>用户名:{{item.peopleName}}</span></el-tag>
+                                            <el-tag type="success"  class="tags"><span>留言内容:{{item.peopleRes}}</span></el-tag>
+                                            <el-tag type="success"  class="tags"><span>发布日期:{{item.time}}</span></el-tag>
                                            </div>
                                        </el-card>
                                     </div>
@@ -52,22 +49,20 @@
 export default {
     data(){
         return{
-            msgs:[]
+        peopleName:'',
+        peopleRes:'',
+        time:'',
+        resdata:[]
         }
     },
-     methods: {
-    
-     
-    },
-    created:function(){
-        this.$axios.get('/api/find/pass/pro')
+    created(){
+        this.$axios.get('/api/selectAlls')
         .then((res)=>{
-           this.msgs=res.data
-           console.log(this.msgs)
+            console.log(res.data)
+            this.resdata=res.data
         })
-    }
-     
-    
+    },
+   
 }
 </script>
 
@@ -114,20 +109,5 @@ export default {
 .NewsTitle{
     text-align: center
 }
-.msgcard{
-    margin: 10px;
-}
-.tags{
-     margin: 5px;
-}
-.buttonp{
-    float: right;
-    margin-right: 10px;
-}
-.borders{
-    border: 1px solid #fa4d4d;
-    background-color: #b0e3eb;
-    padding: 10px;
-    border-radius: 10px;
-}
+
 </style>

@@ -23,6 +23,8 @@ import SuperAddProfess from '@/components/Pages/SuperAddProfess'
 import Pass from '@/components/Pages/Pass'
 import NotPass from '@/components/Pages/NotPass'
 import Step from '@/components/Pages/Step'
+import SuperResY from '@/components/Pages/SuperResY'
+import SuperResN from '@/components/Pages/SuperResN'
 Vue.use(Router)
 
 export default new Router({
@@ -141,6 +143,16 @@ export default new Router({
       path: '/Step',
       name: 'Step',
       component: Step
+    },
+    {
+      path: '/SuperResY',
+      name: 'SuperResY',
+      component: SuperResY
+    },
+    {
+      path: '/SuperResN',
+      name: 'SuperResN',
+      component: SuperResN
     },
   ]
 })

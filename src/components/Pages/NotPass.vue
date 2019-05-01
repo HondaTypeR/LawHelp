@@ -15,6 +15,8 @@
                                  <router-link to="/SuperAddProfess"><el-button class="buttons">认证中心</el-button></router-link>
                                  <router-link to="/Pass"><el-button class="buttons">验证专家</el-button></router-link>
                                  <router-link to="/NotPass"><el-button class="buttons">驳回专家</el-button></router-link>
+                                 <router-link to="/SuperResY"><el-button class="buttons">管理留言</el-button></router-link>
+                                 <router-link to="/SuperResN"><el-button class="buttons">封禁留言</el-button></router-link>
                             </div>
                         </el-col>
                         <el-col :span="20">
